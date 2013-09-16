@@ -44,7 +44,6 @@ template "#{node[:rightscale_monkey][:user_home]}/.ssh/config" do
     :git_hostname => node[:rightscale_monkey][:git][:host_name],
     :keyfile => "#{node[:rightscale_monkey][:user_home]}/.ssh/git_id_rsa"
   )
-  cookbook "monkey"
 end
 
 # Setting up git configuration for root user
@@ -55,5 +54,4 @@ template "#{node[:rightscale_monkey][:user_home]}/.gitconfig" do
     :git_user => node[:rightscale_monkey][:git][:user],
     :git_email => node[:rightscale_monkey][:git][:email]
   )
-  cookbook "monkey"
 end
