@@ -36,10 +36,10 @@ end
 
 # Checking out VirtualMonkey repository
 log "  Checking out VirtualMonkey repository from:" +
-  " #{node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_url]}"
+  " #{node[:rightscale_monkey][:virtualmonkey][:monkey_repo_url]}"
 git node[:rightscale_monkey][:virtualmonkey_path] do
-  repository node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_url]
-  reference node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_branch]
+  repository node[:rightscale_monkey][:virtualmonkey][:monkey_repo_url]
+  reference node[:rightscale_monkey][:virtualmonkey][:monkey_repo_branch]
   action :sync
 end
 
@@ -49,7 +49,7 @@ end
 #
 execute "git checkout" do
   cwd node[:rightscale_monkey][:virtualmonkey_path]
-  command "git checkout #{node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_branch]}"
+  command "git checkout #{node[:rightscale_monkey][:virtualmonkey][:monkey_repo_branch]}"
 end
 
 # Check out right_api_object project from the Github repository
@@ -112,9 +112,9 @@ end
 #
 # Checking out VirtualMonkey repository
 log "  Checking out VirtualMonkey repository from:" +
-  " #{node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_url]}"
+  " #{node[:rightscale_monkey][:virtualmonkey][:monkey_repo_url]}"
 git "#{node[:rightscale_monkey][:virtualmonkey_path]}-ng" do
-  repository node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_url]
+  repository node[:rightscale_monkey][:virtualmonkey][:monkey_repo_url]
   reference "colrefactor"
   action :sync
 end
