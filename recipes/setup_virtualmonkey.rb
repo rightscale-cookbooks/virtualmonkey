@@ -212,18 +212,21 @@ end
 # and we want it in system ruby
 #
 log "  Installing the right_cloud_api gem"
+
+gem_file = "right_cloud_api-#{node[:rightscale_monkey][:right_cloud_api_version]}.gem"
+cookbook_file "/tmp/#{gem_file}" do
+  cookbook "rightscale"
+  source gem_file
+end
+
 gem_package "right_cloud_api" do
   gem_binary "/usr/bin/gem"
-  source ::File.join(
-    ::File.dirname(__FILE__),
-    "..",
-    "..",
-    "rightscale",
-    "files",
-    "default",
-    "right_cloud_api-#{node[:rightscale_monkey][:right_cloud_api_version]}.gem"
-  )
+  source "/tmp/#{gem_file}"
   action :install
+end
+
+file "/tmp/#{gem_file}" do
+  action :delete
 end
 
 log "  Obtaining collateral project name from repo URL"
