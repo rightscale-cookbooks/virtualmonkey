@@ -12,6 +12,7 @@ supports "ubuntu"
 
 depends "rightscale"
 depends "rightscale_jenkins"
+depends "marker"
 
 recipe "rightscale_monkey::setup_git",
   "Setup Git configuration for virtualmonkey."

@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-rightscale_marker
+marker "recipe_start_rightscale" do
+  template "rightscale_audit_entry.erb"
+end
 
 log "  Updating fog credentials"
 template "/root/.fog" do

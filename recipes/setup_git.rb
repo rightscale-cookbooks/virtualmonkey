@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-rightscale_marker
+marker "recipe_start_rightscale" do
+  template "rightscale_audit_entry.erb"
+end
 
 log "  Creating ssh directory for root user"
 directory "#{node[:rightscale_monkey][:user_home]}/.ssh" do

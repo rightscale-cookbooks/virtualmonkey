@@ -8,3 +8,4 @@ cookbook "rightscale", github: "rightscale/rightscale_cookbooks", rel: "cookbook
 cookbook "rightscale_jenkins", github: "rightscale-cookbooks/rightscale_jenkins"
 cookbook "sys", github: "rightscale/rightscale_cookbooks", rel: "cookbooks/sys", tag: "v13.5.0-LTS"
 cookbook "sys_firewall", github: "rightscale/rightscale_cookbooks", rel: "cookbooks/sys_firewall", tag: "v13.5.0-LTS"
+cookbook "marker", github: "rightscale-cookbooks/marker"

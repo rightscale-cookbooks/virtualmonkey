@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-rightscale_marker
+marker "recipe_start_rightscale" do
+  template "rightscale_audit_entry.erb"
+end
 
 # Install the jenkins server
 # See cookbooks/jenkins/recipes/install_server for the "jenkins::install_server"
