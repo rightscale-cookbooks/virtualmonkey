@@ -22,7 +22,7 @@ rightscale_marker
 # Install the jenkins server
 # See cookbooks/jenkins/recipes/install_server for the "jenkins::install_server"
 # recipe.
-include_recipe "jenkins::install_server"
+include_recipe "rightscale_jenkins::install_server"
 
 log "  Checking out Rocketmonkey repository from:" +
   " #{node[:rightscale_monkey][:rocketmonkey][:repo_url]}"
@@ -47,8 +47,8 @@ template "#{node[:rightscale_monkey][:rocketmonkey_path]}/.rocketmonkey.yaml" do
   group node[:rightscale_monkey][:group]
   mode 0644
   variables(
-    :jenkins_user => node[:jenkins][:server][:user_name],
-    :jenkins_password => node[:jenkins][:server][:password],
+    :jenkins_user => node[:rightscale_jenkins][:server][:user_name],
+    :jenkins_password => node[:rightscale_jenkins][:server][:password],
     :right_acct_id => node[:rightscale_monkey][:rest][:right_acct_id],
     :right_subdomain => node[:rightscale_monkey][:rest][:right_subdomain]
   )
