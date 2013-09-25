@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: rightscale_monkey
+# Cookbook Name:: virtualmonkey
 # Recipe:: setup_test_config
 #
 # Copyright (C) 2013 RightScale, Inc.
@@ -17,12 +17,14 @@
 # limitations under the License.
 #
 
-rightscale_marker
+marker "recipe_start_rightscale" do
+  template "rightscale_audit_entry.erb"
+end
 
 # Create the /etc/chef directory if it doesn't exist
 directory "/etc/chef" do
-  owner node[:rightscale_monkey][:user]
-  group node[:rightscale_monkey][:group]
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
   mode 0755
   recursive true
   action :create
@@ -30,27 +32,27 @@ end
 
 # Create the Knife PEM Key
 file "/etc/chef/rightscalevirtualmonkey.pem" do
-  owner node[:rightscale_monkey][:user]
-  group node[:rightscale_monkey][:group]
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
   mode 0600
-  content node[:rightscale_monkey][:test_config][:knife_pem_key]
+  content node[:virtualmonkey][:test_config][:knife_pem_key]
   action :create
 end
 
 # Creates the YAML file with credentials for "check_smtp" test for the
 # "lamp_chef" feature.
-directory "#{node[:rightscale_monkey][:user_home]}/.virtualmonkey" do
-  owner node[:rightscale_monkey][:user]
-  group node[:rightscale_monkey][:group]
+directory "#{node[:virtualmonkey][:user_home]}/.virtualmonkey" do
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
 end
 
-template "#{node[:rightscale_monkey][:user_home]}/.virtualmonkey/test_creds.yaml" do
+template "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/test_creds.yaml" do
   source "test_creds.yaml.erb"
-  owner node[:rightscale_monkey][:user]
-  group node[:rightscale_monkey][:group]
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
   variables(
-    :smtp_username => node[:rightscale_monkey][:test][:smtp_username],
-    :smtp_password => node[:rightscale_monkey][:test][:smtp_password]
+    :smtp_username => node[:virtualmonkey][:test][:smtp_username],
+    :smtp_password => node[:virtualmonkey][:test][:smtp_password]
   )
   mode 0600
 end

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: rightscale_monkey
+# Cookbook Name:: virtualmonkey
 # Recipe:: setup_virtualmonkey
 #
 # Copyright (C) 2013 RightScale, Inc.
@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-rightscale_marker
+marker "recipe_start_rightscale" do
+  template "rightscale_audit_entry.erb"
+end
 
 packages = value_for_platform(
   "centos" => {
@@ -36,10 +38,10 @@ end
 
 # Checking out VirtualMonkey repository
 log "  Checking out VirtualMonkey repository from:" +
-  " #{node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_url]}"
-git node[:rightscale_monkey][:virtualmonkey_path] do
-  repository node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_url]
-  reference node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_branch]
+  " #{node[:virtualmonkey][:virtualmonkey][:monkey_repo_url]}"
+git node[:virtualmonkey][:virtualmonkey_path] do
+  repository node[:virtualmonkey][:virtualmonkey][:monkey_repo_url]
+  reference node[:virtualmonkey][:virtualmonkey][:monkey_repo_branch]
   action :sync
 end
 
@@ -48,48 +50,48 @@ end
 # branch again!
 #
 execute "git checkout" do
-  cwd node[:rightscale_monkey][:virtualmonkey_path]
-  command "git checkout #{node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_branch]}"
+  cwd node[:virtualmonkey][:virtualmonkey_path]
+  command "git checkout #{node[:virtualmonkey][:virtualmonkey][:monkey_repo_branch]}"
 end
 
 # Check out right_api_object project from the Github repository
 log "  Checking out right_api_objects project from:" +
-  " #{node[:rightscale_monkey][:virtualmonkey][:right_api_objects_repo_url]}"
-git "#{node[:rightscale_monkey][:user_home]}/right_api_objects" do
-  repository node[:rightscale_monkey][:virtualmonkey][:right_api_objects_repo_url]
-  reference node[:rightscale_monkey][:virtualmonkey][:right_api_objects_repo_branch]
+  " #{node[:virtualmonkey][:virtualmonkey][:right_api_objects_repo_url]}"
+git "#{node[:virtualmonkey][:user_home]}/right_api_objects" do
+  repository node[:virtualmonkey][:virtualmonkey][:right_api_objects_repo_url]
+  reference node[:virtualmonkey][:virtualmonkey][:right_api_objects_repo_branch]
   action :sync
 end
 
 # Check out the correct branch for right_api_objects
 execute "git checkout" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/right_api_objects"
+  cwd "#{node[:virtualmonkey][:user_home]}/right_api_objects"
   command "git checkout" +
-    " #{node[:rightscale_monkey][:virtualmonkey][:right_api_objects_repo_branch]}"
+    " #{node[:virtualmonkey][:virtualmonkey][:right_api_objects_repo_branch]}"
 end
 
 # Install the dependencies of right_api_objects
 execute "bundle install" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/right_api_objects"
+  cwd "#{node[:virtualmonkey][:user_home]}/right_api_objects"
   command "bundle install"
 end
 
 # Install the right_api_objects gem
 execute "rake install" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/right_api_objects"
+  cwd "#{node[:virtualmonkey][:user_home]}/right_api_objects"
   command "rake install"
 end
 
 # Install Virtualmonkey dependencies
 log "  Installing Virtualmonkey dependencies"
 execute "bundle install" do
-  cwd node[:rightscale_monkey][:virtualmonkey_path]
+  cwd node[:virtualmonkey][:virtualmonkey_path]
   command "bundle install --no-color --system"
 end
 
 log "  Building and Installing Virtualmonkey gem"
 execute "rake install virtualmonkey" do
-  cwd node[:rightscale_monkey][:virtualmonkey_path]
+  cwd node[:virtualmonkey][:virtualmonkey_path]
   command "rake install"
 end
 
@@ -97,10 +99,10 @@ end
 # configuration file is not managed by Chef.
 log "  Creating VirtualMonkey configuration file from template"
 execute "copy virtualmonkey configuration file" do
-  cwd node[:rightscale_monkey][:virtualmonkey_path]
+  cwd node[:virtualmonkey][:virtualmonkey_path]
   command "cp config.yaml .config.yaml"
   not_if do
-    ::File.exists?("#{node[:rightscale_monkey][:virtualmonkey_path]}/.config.yaml")
+    ::File.exists?("#{node[:virtualmonkey][:virtualmonkey_path]}/.config.yaml")
   end
 end
 
@@ -112,9 +114,9 @@ end
 #
 # Checking out VirtualMonkey repository
 log "  Checking out VirtualMonkey repository from:" +
-  " #{node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_url]}"
-git "#{node[:rightscale_monkey][:virtualmonkey_path]}-ng" do
-  repository node[:rightscale_monkey][:virtualmonkey][:rightscale_monkey_repo_url]
+  " #{node[:virtualmonkey][:virtualmonkey][:monkey_repo_url]}"
+git "#{node[:virtualmonkey][:virtualmonkey_path]}-ng" do
+  repository node[:virtualmonkey][:virtualmonkey][:monkey_repo_url]
   reference "colrefactor"
   action :sync
 end
@@ -124,20 +126,20 @@ end
 # branch again!
 #
 execute "git checkout" do
-  cwd "#{node[:rightscale_monkey][:virtualmonkey_path]}-ng"
+  cwd "#{node[:virtualmonkey][:virtualmonkey_path]}-ng"
   command "git checkout colrefactor"
 end
 
 # Install Virtualmonkey dependencies
 log "  Installing Virtualmonkey dependencies"
 execute "bundle install" do
-  cwd "#{node[:rightscale_monkey][:virtualmonkey_path]}-ng"
+  cwd "#{node[:virtualmonkey][:virtualmonkey_path]}-ng"
   command "bundle install --no-color --system"
 end
 
 log "  Building and Installing Virtualmonkey Nextgen gem"
 execute "rake install virtualmonkey-ng" do
-  cwd "#{node[:rightscale_monkey][:virtualmonkey_path]}-ng"
+  cwd "#{node[:virtualmonkey][:virtualmonkey_path]}-ng"
   command "rake install"
 end
 
@@ -145,10 +147,10 @@ end
 # configuration file is not managed by Chef.
 log "  Creating VirtualMonkey configuration file from template"
 execute "copy virtualmonkey configuration file" do
-  cwd "#{node[:rightscale_monkey][:virtualmonkey_path]}-ng"
+  cwd "#{node[:virtualmonkey][:virtualmonkey_path]}-ng"
   command "cp config.yaml .config.yaml"
   not_if do
-    ::File.exists?("#{node[:rightscale_monkey][:virtualmonkey_path]}-ng/.config.yaml")
+    ::File.exists?("#{node[:virtualmonkey][:virtualmonkey_path]}-ng/.config.yaml")
   end
 end
 
@@ -157,7 +159,7 @@ file "/etc/profile.d/01virtualmonkey-ng.sh" do
   owner "root"
   group "root"
   mode 0755
-  content "export PATH=#{node[:rightscale_monkey][:virtualmonkey_path]}-ng/bin:$PATH"
+  content "export PATH=#{node[:virtualmonkey][:virtualmonkey_path]}-ng/bin:$PATH"
   action :create
 end
 
@@ -168,28 +170,28 @@ nextgen_collateral_repo_url =
 
 log "  Checking out nextgen collateral repo to" +
   " #{nextgen_collateral_name}"
-git "#{node[:rightscale_monkey][:user_home]}/#{nextgen_collateral_name}" do
+git "#{node[:virtualmonkey][:user_home]}/#{nextgen_collateral_name}" do
   repository nextgen_collateral_repo_url
-  reference node[:rightscale_monkey][:virtualmonkey][:collateral_repo_branch]
+  reference node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]
   action :sync
 end
 
 execute "git checkout" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/#{nextgen_collateral_name}"
+  cwd "#{node[:virtualmonkey][:user_home]}/#{nextgen_collateral_name}"
   command "git checkout" +
-    " #{node[:rightscale_monkey][:virtualmonkey][:collateral_repo_branch]}"
+    " #{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}"
 end
 
 log "  Installing gems required for the nextgen collateral project"
 execute "bundle install on collateral" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/#{nextgen_collateral_name}"
+  cwd "#{node[:virtualmonkey][:user_home]}/#{nextgen_collateral_name}"
   command "bundle install --no-color --system"
 end
 
 # Populate all virtualmonkey cloud variables
 log "  Populating virtualmonkey cloud variables on nextgen collateral project"
 execute "populate cloud variables" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/#{nextgen_collateral_name}"
+  cwd "#{node[:virtualmonkey][:user_home]}/#{nextgen_collateral_name}"
   command "bundle exec monkey populate_all_cloud_vars" +
     " --force" +
     " --overwrite" +
@@ -203,7 +205,7 @@ file "/etc/profile.d/02virtualmonkey.sh" do
   owner "root"
   group "root"
   mode 0755
-  content "export PATH=#{node[:rightscale_monkey][:virtualmonkey_path]}/bin:$PATH"
+  content "export PATH=#{node[:virtualmonkey][:virtualmonkey_path]}/bin:$PATH"
   action :create
 end
 
@@ -212,57 +214,60 @@ end
 # and we want it in system ruby
 #
 log "  Installing the right_cloud_api gem"
+
+gem_file = "right_cloud_api-#{node[:virtualmonkey][:right_cloud_api_version]}.gem"
+cookbook_file "/tmp/#{gem_file}" do
+  cookbook "rightscale"
+  source gem_file
+end
+
 gem_package "right_cloud_api" do
   gem_binary "/usr/bin/gem"
-  source ::File.join(
-    ::File.dirname(__FILE__),
-    "..",
-    "..",
-    "rightscale",
-    "files",
-    "default",
-    "right_cloud_api-#{node[:rightscale_monkey][:right_cloud_api_version]}.gem"
-  )
+  source "/tmp/#{gem_file}"
   action :install
+end
+
+file "/tmp/#{gem_file}" do
+  action :delete
 end
 
 log "  Obtaining collateral project name from repo URL"
 basename_cmd = Mixlib::ShellOut.new("basename" +
-  " #{node[:rightscale_monkey][:virtualmonkey][:collateral_repo_url]} .git"
+  " #{node[:virtualmonkey][:virtualmonkey][:collateral_repo_url]} .git"
 )
 basename_cmd.run_command
 basename_cmd.error!
 
-node[:rightscale_monkey][:virtualmonkey][:collateral_name] = basename_cmd.stdout.chomp
+node[:virtualmonkey][:virtualmonkey][:collateral_name] = basename_cmd.stdout.chomp
 
 log "  Checking out collateral repo to" +
-  " #{node[:rightscale_monkey][:virtualmonkey][:collateral_name]}"
-git "#{node[:rightscale_monkey][:user_home]}/" +
-  "#{node[:rightscale_monkey][:virtualmonkey][:collateral_name]}" do
-  repository node[:rightscale_monkey][:virtualmonkey][:collateral_repo_url]
-  reference node[:rightscale_monkey][:virtualmonkey][:collateral_repo_branch]
+  " #{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
+git "#{node[:virtualmonkey][:user_home]}/" +
+  "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}" do
+  repository node[:virtualmonkey][:virtualmonkey][:collateral_repo_url]
+  reference node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]
   action :sync
 end
 
 execute "git checkout" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/" +
-    "#{node[:rightscale_monkey][:virtualmonkey][:collateral_name]}"
+  cwd "#{node[:virtualmonkey][:user_home]}/" +
+    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
   command "git checkout" +
-    " #{node[:rightscale_monkey][:virtualmonkey][:collateral_repo_branch]}"
+    " #{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}"
 end
 
 log "  Installing gems required for the collateral project"
 execute "bundle install on collateral" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/" +
-    "#{node[:rightscale_monkey][:virtualmonkey][:collateral_name]}"
+  cwd "#{node[:virtualmonkey][:user_home]}/" +
+    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
   command "bundle install --no-color --system"
 end
 
 # Populate all virtualmonkey cloud variables
 log "  Populating virtualmonkey cloud variables"
 execute "populate cloud variables" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/" +
-    "#{node[:rightscale_monkey][:virtualmonkey][:collateral_name]}"
+  cwd "#{node[:virtualmonkey][:user_home]}/" +
+    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
   command "bundle exec monkey populate_all_cloud_vars" +
     " --force" +
     " --overwrite" +
@@ -271,16 +276,16 @@ end
 
 log "  Updating the ServerTemplate IDs for old collateral"
 execute "update_stids" do
-  cwd "#{node[:rightscale_monkey][:user_home]}/" +
-    "#{node[:rightscale_monkey][:virtualmonkey][:collateral_name]}"
+  cwd "#{node[:virtualmonkey][:user_home]}/" +
+    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
   command "bin/update_stids --source linux --lineage" +
-    " #{node[:rightscale_monkey][:virtualmonkey][:collateral_repo_branch]}.csv"
+    " #{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}.csv"
   only_if do
     File.exists?(
-      "#{node[:rightscale_monkey][:user_home]}/" +
-      "#{node[:rightscale_monkey][:virtualmonkey][:collateral_name]}/" +
+      "#{node[:virtualmonkey][:user_home]}/" +
+      "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}/" +
       "csv_sheets/" +
-      "#{node[:rightscale_monkey][:virtualmonkey][:collateral_repo_branch]}.csv"
+      "#{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}.csv"
     )
   end
 end
@@ -293,8 +298,8 @@ end
 
 # Create the directory for virtualmonkey log files
 directory "/var/log/virtualmonkey" do
-  owner node[:rightscale_monkey][:user]
-  group node[:rightscale_monkey][:group]
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
   recursive true
 end
 
@@ -325,15 +330,15 @@ if node[:platform] =~ /ubuntu/
     end
   end
 
-  directory "#{node[:rightscale_monkey][:user_home]}/.virtualmonkey" do
-    owner node[:rightscale_monkey][:user]
-    group node[:rightscale_monkey][:group]
+  directory "#{node[:virtualmonkey][:user_home]}/.virtualmonkey" do
+    owner node[:virtualmonkey][:user]
+    group node[:virtualmonkey][:group]
   end
 
-  file "#{node[:rightscale_monkey][:user_home]}/.virtualmonkey/windows_password" do
-    content node[:rightscale_monkey][:virtualmonkey][:windows_admin_password]
-    owner node[:rightscale_monkey][:user]
-    group node[:rightscale_monkey][:group]
+  file "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/windows_password" do
+    content node[:virtualmonkey][:virtualmonkey][:windows_admin_password]
+    owner node[:virtualmonkey][:user]
+    group node[:virtualmonkey][:group]
     mode 0600
   end
 else
