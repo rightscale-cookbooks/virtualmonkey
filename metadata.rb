@@ -1,8 +1,8 @@
-name             'rightscale_monkey'
+name             'virtualmonkey'
 maintainer       'RightScale, Inc.'
 maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
-description      'Installs/Configures Virtual Monkey and Rocket Monkey'
+description      'Installs/Configures VirtualMonkey'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '13.6.0'
 
@@ -11,20 +11,20 @@ supports "redhat"
 supports "ubuntu"
 
 depends "rightscale"
-depends "rightscale_jenkins"
+depends "rs-jenkins"
 depends "marker"
 
-recipe "rightscale_monkey::setup_git",
+recipe "virtualmonkey::setup_git",
   "Setup Git configuration for virtualmonkey."
-recipe "rightscale_monkey::setup_rest_connection",
+recipe "virtualmonkey::setup_rest_connection",
   "Setup the rest_connection library."
-recipe "rightscale_monkey::setup_virtualmonkey",
+recipe "virtualmonkey::setup_virtualmonkey",
   "Setup virtualmonkey."
-recipe "rightscale_monkey::setup_rocketmonkey",
+recipe "virtualmonkey::setup_rocketmonkey",
   "Setup rocketmonkey."
-recipe "rightscale_monkey::update_fog_credentials",
+recipe "virtualmonkey::update_fog_credentials",
   "Setup or update existing credentials for fog configuration."
-recipe "rightscale_monkey::setup_test_config",
+recipe "virtualmonkey::setup_test_config",
   "Setup test specific configuration."
 
 {
@@ -167,212 +167,212 @@ recipe "rightscale_monkey::setup_test_config",
 }.each do |attribute_name, value|
   display_name, description = value
 
-  attribute "rightscale_monkey/fog/#{attribute_name}",
+  attribute "virtualmonkey/fog/#{attribute_name}",
     :display_name => display_name,
     :description => description,
     :required => "required",
-    :recipes => ["rightscale_monkey::update_fog_credentials"]
+    :recipes => ["virtualmonkey::update_fog_credentials"]
 end
 
-attribute "rightscale_monkey/git/user",
+attribute "virtualmonkey/git/user",
   :display_name => "Git Username",
   :description =>
     "Git Username to be used with github",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_git"]
+  :recipes => ["virtualmonkey::setup_git"]
 
-attribute "rightscale_monkey/git/email",
+attribute "virtualmonkey/git/email",
   :display_name => "Git Email",
   :description =>
     "Git email address to be used with github",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_git"]
+  :recipes => ["virtualmonkey::setup_git"]
 
-attribute "rightscale_monkey/git/ssh_key",
+attribute "virtualmonkey/git/ssh_key",
   :display_name => "SSH key for Git",
   :description =>
     "SSH key for using with Git",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_git"]
+  :recipes => ["virtualmonkey::setup_git"]
 
-attribute "rightscale_monkey/git/host_name",
+attribute "virtualmonkey/git/host_name",
   :display_name => "Git Hostname",
   :description =>
     "Git Hostname for adding to ssh config",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_git"]
+  :recipes => ["virtualmonkey::setup_git"]
 
-attribute "rightscale_monkey/rest/right_passwd",
+attribute "virtualmonkey/rest/right_passwd",
   :display_name => "RightScale password",
   :description =>
     "RightScale password to connect to the API",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/right_email",
+attribute "virtualmonkey/rest/right_email",
   :display_name => "RightScale Email",
   :description =>
     "RightScale email address to connect to the API",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/right_acct_id",
+attribute "virtualmonkey/rest/right_acct_id",
   :display_name => "RightScale account ID",
   :description =>
     "RightScale account ID used to connect to the API",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/right_subdomain",
+attribute "virtualmonkey/rest/right_subdomain",
   :display_name => "RightScale Subdomain",
   :description =>
     "RightScale subdomain. Example. 'my', 'moo.test'",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/ssh_key",
+attribute "virtualmonkey/rest/ssh_key",
   :display_name => "API user key",
   :description =>
     "API user key used by rest_connection",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/ssh_pub_key",
+attribute "virtualmonkey/rest/ssh_pub_key",
   :display_name => "Public key of Jenkins master",
   :description =>
     "Public key of Jenkins master that should be given access",
   :required => "optional",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/repo_url",
+attribute "virtualmonkey/rest/repo_url",
   :display_name => "Rest connection Repo URL",
   :description =>
     "Git URL for checking out rest_connection project",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/repo_branch",
+attribute "virtualmonkey/rest/repo_branch",
   :display_name => "Rest connection Repo Branch",
   :description =>
     "Git branch for checking out rest_connection project",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/azure_hack_on",
+attribute "virtualmonkey/rest/azure_hack_on",
   :display_name => "Azure Hack ON/OFF",
   :description =>
     "Whether to enable/disable Azure retry hack",
   :required => "optional",
   :choice => ["true", "false"],
   :default => "true",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/azure_hack_retry_count",
+attribute "virtualmonkey/rest/azure_hack_retry_count",
   :display_name => "Azure Hack Retry Count",
   :description =>
     "Number of retries for Azure launch failures. Example: 5",
   :required => "optional",
   :default => "5",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/azure_hack_sleep_seconds",
+attribute "virtualmonkey/rest/azure_hack_sleep_seconds",
   :display_name => "Azure Hack Sleep Seconds",
   :description =>
     "Number of seconds to sleep between attempts on relaunches",
   :required => "optional",
   :default => "60",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/rest/api_logging",
+attribute "virtualmonkey/rest/api_logging",
   :display_name => "API Logging",
   :description =>
     "Whether to enable/disable API logging",
   :required => "optional",
   :choice => ["true", "false"],
   :default => "false",
-  :recipes => ["rightscale_monkey::setup_rest_connection"]
+  :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "rightscale_monkey/test_config/knife_pem_key",
+attribute "virtualmonkey/test_config/knife_pem_key",
   :display_name => "Knife PEM Key",
   :description =>
     "The PEM key used by the knife commands to communicate with hosted" +
     " chef server",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_test_config"]
+  :recipes => ["virtualmonkey::setup_test_config"]
 
-attribute "rightscale_monkey/virtualmonkey/monkey_repo_url",
+attribute "virtualmonkey/virtualmonkey/monkey_repo_url",
   :display_name => "VirtualMonkey Repo URL",
   :description =>
     "Git repository URL for VirtualMonkey",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_virtualmonkey"]
+  :recipes => ["virtualmonkey::setup_virtualmonkey"]
 
-attribute "rightscale_monkey/virtualmonkey/monkey_repo_branch",
+attribute "virtualmonkey/virtualmonkey/monkey_repo_branch",
   :display_name => "VirtualMonkey Repo Branch",
   :description =>
     "Git branch for VirtualMonkey",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_virtualmonkey"]
+  :recipes => ["virtualmonkey::setup_virtualmonkey"]
 
-attribute "rightscale_monkey/virtualmonkey/collateral_repo_url",
+attribute "virtualmonkey/virtualmonkey/collateral_repo_url",
   :display_name => "Collateral Repo URL",
   :description =>
     "Git URL for collateral project",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_virtualmonkey"]
+  :recipes => ["virtualmonkey::setup_virtualmonkey"]
 
-attribute "rightscale_monkey/virtualmonkey/collateral_repo_branch",
+attribute "virtualmonkey/virtualmonkey/collateral_repo_branch",
   :display_name => "Collateral Repo Branch",
   :description =>
     "Git branch for collateral project",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_virtualmonkey"]
+  :recipes => ["virtualmonkey::setup_virtualmonkey"]
 
-attribute "rightscale_monkey/virtualmonkey/right_api_objects_repo_url",
+attribute "virtualmonkey/virtualmonkey/right_api_objects_repo_url",
   :display_name => "Right API Objects Repo URL",
   :description =>
     "Git repository URL for Right API Objects",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_virtualmonkey"]
+  :recipes => ["virtualmonkey::setup_virtualmonkey"]
 
-attribute "rightscale_monkey/virtualmonkey/right_api_objects_repo_branch",
+attribute "virtualmonkey/virtualmonkey/right_api_objects_repo_branch",
   :display_name => "Right API Objects Repo Branch",
   :description =>
     "Git branch for Right API Objects",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_virtualmonkey"]
+  :recipes => ["virtualmonkey::setup_virtualmonkey"]
 
-attribute "rightscale_monkey/virtualmonkey/windows_admin_password",
+attribute "virtualmonkey/virtualmonkey/windows_admin_password",
   :display_name => "Windows Administrator Password",
   :description =>
     "The Administrator password for connecting to Windows servers",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_virtualmonkey"]
+  :recipes => ["virtualmonkey::setup_virtualmonkey"]
 
-attribute "rightscale_monkey/rocketmonkey/repo_url",
+attribute "virtualmonkey/rocketmonkey/repo_url",
   :display_name => "RocketMonkey Repo URL",
   :description =>
     "Git repository URL for RocketMonkey",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_rocketmonkey"]
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
 
-attribute "rightscale_monkey/rocketmonkey/repo_branch",
+attribute "virtualmonkey/rocketmonkey/repo_branch",
   :display_name => "RocketMonkey Repo Branch",
   :description =>
     "Git branch for VirtualMonkey project",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_rocketmonkey"]
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
 
-attribute "rightscale_monkey/test/smtp_username",
+attribute "virtualmonkey/test/smtp_username",
   :display_name => "SMTP Username",
   :description =>
     "The SMTP username for lamp's check smtp test",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_test_config"]
+  :recipes => ["virtualmonkey::setup_test_config"]
 
-attribute "rightscale_monkey/test/smtp_password",
+attribute "virtualmonkey/test/smtp_password",
   :display_name => "SMTP Password",
   :description =>
     "The SMTP password for lamp's check smtp test",
   :required => "required",
-  :recipes => ["rightscale_monkey::setup_test_config"]
+  :recipes => ["virtualmonkey::setup_test_config"]

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: rightscale_monkey
+# Cookbook Name:: virtualmonkey
 # Recipe:: update_for_credentials
 #
 # Copyright (C) 2013 RightScale, Inc.
@@ -25,6 +25,6 @@ log "  Updating fog credentials"
 template "/root/.fog" do
   source "fog.erb"
   variables(
-    :creds => node[:rightscale_monkey][:fog]
+    :creds => node[:virtualmonkey][:fog]
   )
 end

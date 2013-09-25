@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: rightscale_monkey
+# Cookbook Name:: virtualmonkey
 # Recipe:: setup_rest_connection
 #
 # Copyright (C) 2013 RightScale, Inc.
@@ -40,7 +40,7 @@ end unless packages.empty?
 # installed.
 gem_package "rubygems-update" do
   gem_binary "/usr/bin/gem"
-  version node[:rightscale_monkey][:rubygems_update_version]
+  version node[:virtualmonkey][:rubygems_update_version]
   action :install
 end
 
@@ -58,7 +58,7 @@ end
 
 # Installing gem dependencies
 log "  Installing gems requierd by rest_connection"
-node[:rightscale_monkey][:rest][:gem_packages].each do |gem_name, gem_version|
+node[:virtualmonkey][:rest][:gem_packages].each do |gem_name, gem_version|
   gem_package gem_name do
     gem_binary "/usr/bin/gem"
     version gem_version
@@ -71,9 +71,9 @@ end
 # virtualmonkey and rocketmonkey determine the version they require for
 # rest_connection.
 #
-git node[:rightscale_monkey][:rest_connection_path] do
-  repository node[:rightscale_monkey][:rest][:repo_url]
-  reference node[:rightscale_monkey][:rest][:repo_branch]
+git node[:virtualmonkey][:rest_connection_path] do
+  repository node[:virtualmonkey][:rest][:repo_url]
+  reference node[:virtualmonkey][:rest][:repo_branch]
   action :sync
 end
 
@@ -82,55 +82,55 @@ end
 # branch again!
 
 execute "git checkout" do
-  cwd node[:rightscale_monkey][:rest_connection_path]
-  command "git checkout #{node[:rightscale_monkey][:rest][:repo_branch]}"
+  cwd node[:virtualmonkey][:rest_connection_path]
+  command "git checkout #{node[:virtualmonkey][:rest][:repo_branch]}"
 end
 
 log "  Creating rest_connection configuration directory"
-directory "#{node[:rightscale_monkey][:user_home]}/.rest_connection" do
-  owner node[:rightscale_monkey][:user]
-  group node[:rightscale_monkey][:group]
+directory "#{node[:virtualmonkey][:user_home]}/.rest_connection" do
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
   mode "0755"
   action :create
 end
 
 # Create the private key used for SSH
-file "#{node[:rightscale_monkey][:user_home]}/.ssh/api_user_key" do
-  owner node[:rightscale_monkey][:user]
-  group node[:rightscale_monkey][:group]
+file "#{node[:virtualmonkey][:user_home]}/.ssh/api_user_key" do
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
   mode 0600
-  content node[:rightscale_monkey][:rest][:ssh_key]
+  content node[:virtualmonkey][:rest][:ssh_key]
   action :create
 end
 
-template "#{node[:rightscale_monkey][:user_home]}/.rest_connection/rest_api_config.yaml" do
+template "#{node[:virtualmonkey][:user_home]}/.rest_connection/rest_api_config.yaml" do
   source "rest_api_config.yaml.erb"
   variables(
-    :right_passwd => node[:rightscale_monkey][:rest][:right_passwd],
-    :right_email => node[:rightscale_monkey][:rest][:right_email],
-    :right_acct_id => node[:rightscale_monkey][:rest][:right_acct_id],
-    :right_subdomain => node[:rightscale_monkey][:rest][:right_subdomain],
-    :azure_hack_on => node[:rightscale_monkey][:rest][:azure_hack_on],
-    :azure_hack_retry_count => node[:rightscale_monkey][:rest][:azure_hack_retry_count],
+    :right_passwd => node[:virtualmonkey][:rest][:right_passwd],
+    :right_email => node[:virtualmonkey][:rest][:right_email],
+    :right_acct_id => node[:virtualmonkey][:rest][:right_acct_id],
+    :right_subdomain => node[:virtualmonkey][:rest][:right_subdomain],
+    :azure_hack_on => node[:virtualmonkey][:rest][:azure_hack_on],
+    :azure_hack_retry_count => node[:virtualmonkey][:rest][:azure_hack_retry_count],
     :azure_hack_sleep_seconds =>
-      node[:rightscale_monkey][:rest][:azure_hack_sleep_seconds],
-    :api_logging => node[:rightscale_monkey][:rest][:api_logging],
-    :ssh_keys => ["#{node[:rightscale_monkey][:user_home]}/.ssh/api_user_key"]
+      node[:virtualmonkey][:rest][:azure_hack_sleep_seconds],
+    :api_logging => node[:virtualmonkey][:rest][:api_logging],
+    :ssh_keys => ["#{node[:virtualmonkey][:user_home]}/.ssh/api_user_key"]
   )
 end
 
 # Create the authorized_keys file if it doesn't exist
-file "#{node[:rightscale_monkey][:user_home]}/.ssh/authorized_keys" do
-  owner node[:rightscale_monkey][:user]
-  group node[:rightscale_monkey][:group]
+file "#{node[:virtualmonkey][:user_home]}/.ssh/authorized_keys" do
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
   mode 0644
   action :create
 end
 
-unless node[:rightscale_monkey][:rest][:ssh_pub_key].empty?
+unless node[:virtualmonkey][:rest][:ssh_pub_key].empty?
   execute "add public key to authorized keys" do
-    command "echo #{node[:rightscale_monkey][:rest][:ssh_pub_key]} >>" +
-      " #{node[:rightscale_monkey][:user_home]}/.ssh/authorized_keys"
+    command "echo #{node[:virtualmonkey][:rest][:ssh_pub_key]} >>" +
+      " #{node[:virtualmonkey][:user_home]}/.ssh/authorized_keys"
     not_if do
       File.open("#{ENV['HOME']}/.ssh/authorized_keys").lines.any? do |line|
         line.chomp == node[:jenkins][:public_key]
