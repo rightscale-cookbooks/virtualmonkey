@@ -1,4 +1,4 @@
-# rightscale_monkey Cookbook
+# virtualmonkey Cookbook
 
 ## DESCRIPTION:
 
@@ -22,12 +22,12 @@ There are no known limitations.
 To setup the VirtualMonkey test environment, include the recipes in the
 following order.
 
-1. `rightscale_monkey::setup_git`
-2. `rightscale_monkey::setup_ruby`
-3. `rightscale_monkey::setup_rest_connection`
-4. `rightscale_monkey::setup_virtualmonkey`
-5. `rightscale_monkey::setup_test_config`
-6. `rightscale_monkey::update_fog_credentials`
+1. `virtualmonkey::setup_git`
+2. `virtualmonkey::setup_ruby`
+3. `virtualmonkey::setup_rest_connection`
+4. `virtualmonkey::setup_virtualmonkey`
+5. `virtualmonkey::setup_test_config`
+6. `virtualmonkey::update_fog_credentials`
 
 ## DETAILS:
 
@@ -40,28 +40,28 @@ attributes which have inputs can be found in the metadata.rb file.
 
 #### General attributes
 
-* `node[:rightscale_monkey][:rest][:gem_packages]` - List of Rubygems required by the
+* `node[:virtualmonkey][:rest][:gem_packages]` - List of Rubygems required by the
   rest_connection library along with the version information.
-* `node[:rightscale_monkey][:rest][packages]` - List of packages required for the
+* `node[:virtualmonkey][:rest][packages]` - List of packages required for the
   rest_connection library.
-* `node[:rightscale_monkey][:virtualmonkey][:packages]` - List of packages required for
+* `node[:virtualmonkey][:virtualmonkey][:packages]` - List of packages required for
   the virtualmonkey library.
 
 ### Recipes:
 
-1. `rightscale_monkey::setup_git` - This recipe sets up the git credentials and
+1. `virtualmonkey::setup_git` - This recipe sets up the git credentials and
    configurations to checkout source code from git.
-2. `rightscale_monkey::setup_ruby` - The VirtualMonkey doesn't support Ruby 1.9.x yet. So
+2. `virtualmonkey::setup_ruby` - The VirtualMonkey doesn't support Ruby 1.9.x yet. So
    this recipe will remove Ruby 1.9.x and install Ruby 1.8.7.
-3. `rightscale_monkey::setup_rest_connection` - This recipe will setup the rest_connection
+3. `virtualmonkey::setup_rest_connection` - This recipe will setup the rest_connection
    libraries which is used for communicating with RightScale API.
-4. `rightscale_monkey::setup_virtualmonkey` - This recipe will setup the virtualmonkey
+4. `virtualmonkey::setup_virtualmonkey` - This recipe will setup the virtualmonkey
    test framework.
-5. `rightscale_monkey::setup_rocketmonkey` - This recipe will setup rocketmonkey and also
+5. `virtualmonkey::setup_rocketmonkey` - This recipe will setup rocketmonkey and also
    install the jenkins server.
-6. `rightscale_monkey::setup_test_config` - This recipe will setup test specific
+6. `virtualmonkey::setup_test_config` - This recipe will setup test specific
    gems/packages.
-7. `rightscale_monkey::update_fog_credentials` - This recipe will create/update the fog
+7. `virtualmonkey::update_fog_credentials` - This recipe will create/update the fog
    credentials file with the inputs provided.
 
 ### Templates:
