@@ -89,12 +89,6 @@ execute "bundle install" do
   command "bundle install --no-color --system"
 end
 
-log "  Building and Installing Virtualmonkey gem"
-execute "rake install virtualmonkey" do
-  cwd node[:virtualmonkey][:virtualmonkey_path]
-  command "rake install"
-end
-
 # Create the VirtualMonkey configuration file from template. Currently, this
 # configuration file is not managed by Chef.
 log "  Creating VirtualMonkey configuration file from template"
@@ -135,12 +129,6 @@ log "  Installing Virtualmonkey dependencies"
 execute "bundle install" do
   cwd "#{node[:virtualmonkey][:virtualmonkey_path]}-ng"
   command "bundle install --no-color --system"
-end
-
-log "  Building and Installing Virtualmonkey Nextgen gem"
-execute "rake install virtualmonkey-ng" do
-  cwd "#{node[:virtualmonkey][:virtualmonkey_path]}-ng"
-  command "rake install"
 end
 
 # Create the VirtualMonkey configuration file from template. Currently, this
