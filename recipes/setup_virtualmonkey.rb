@@ -101,56 +101,8 @@ execute "copy virtualmonkey configuration file" do
 end
 
 ###############################################################################
-# The following code checks out the virtualmonkey nextgen code and sets it up
-# so we don't have to launch different monkeys for testing the nextgen
-# collateral. This code should be removed from the template when the TOS
-# collateral is abondoned.
+# The following code checks out the nextgen collateral.
 #
-# Checking out VirtualMonkey repository
-log "  Checking out VirtualMonkey repository from:" +
-  " #{node[:virtualmonkey][:virtualmonkey][:monkey_repo_url]}"
-git "#{node[:virtualmonkey][:virtualmonkey_path]}-ng" do
-  repository node[:virtualmonkey][:virtualmonkey][:monkey_repo_url]
-  reference "colrefactor"
-  action :sync
-end
-
-# By default chef changes the checked out branch to a branch named 'deploy'
-# locally. To make sure we can pull/push changes, let's checkout the correct
-# branch again!
-#
-execute "git checkout" do
-  cwd "#{node[:virtualmonkey][:virtualmonkey_path]}-ng"
-  command "git checkout colrefactor"
-end
-
-# Install Virtualmonkey dependencies
-log "  Installing Virtualmonkey dependencies"
-execute "bundle install" do
-  cwd "#{node[:virtualmonkey][:virtualmonkey_path]}-ng"
-  command "bundle install --no-color --system"
-end
-
-# Create the VirtualMonkey configuration file from template. Currently, this
-# configuration file is not managed by Chef.
-log "  Creating VirtualMonkey configuration file from template"
-execute "copy virtualmonkey configuration file" do
-  cwd "#{node[:virtualmonkey][:virtualmonkey_path]}-ng"
-  command "cp config.yaml .config.yaml"
-  not_if do
-    ::File.exists?("#{node[:virtualmonkey][:virtualmonkey_path]}-ng/.config.yaml")
-  end
-end
-
-# Add virtualmonkey-ng to PATH
-file "/etc/profile.d/01virtualmonkey-ng.sh" do
-  owner "root"
-  group "root"
-  mode 0755
-  content "export PATH=#{node[:virtualmonkey][:virtualmonkey_path]}-ng/bin:$PATH"
-  action :create
-end
-
 # Checkout the nextgen collateral project and configure it
 nextgen_collateral_name = "rightscale_cookbooks_private"
 nextgen_collateral_repo_url =
@@ -188,14 +140,6 @@ end
 
 ###############################################################################
 
-# Add virtualmonkey to PATH
-file "/etc/profile.d/02virtualmonkey.sh" do
-  owner "root"
-  group "root"
-  mode 0755
-  content "export PATH=#{node[:virtualmonkey][:virtualmonkey_path]}/bin:$PATH"
-  action :create
-end
 
 # Installing right_cloud_api gem from the template file found in rightscale
 # cookbook. The rightscale::install_tools installs this gem in sandbox ruby
