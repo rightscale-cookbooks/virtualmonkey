@@ -54,34 +54,6 @@ execute "git checkout" do
   command "git checkout #{node[:virtualmonkey][:virtualmonkey][:monkey_repo_branch]}"
 end
 
-# Check out right_api_object project from the Github repository
-log "  Checking out right_api_objects project from:" +
-  " #{node[:virtualmonkey][:virtualmonkey][:right_api_objects_repo_url]}"
-git "#{node[:virtualmonkey][:user_home]}/right_api_objects" do
-  repository node[:virtualmonkey][:virtualmonkey][:right_api_objects_repo_url]
-  reference node[:virtualmonkey][:virtualmonkey][:right_api_objects_repo_branch]
-  action :sync
-end
-
-# Check out the correct branch for right_api_objects
-execute "git checkout" do
-  cwd "#{node[:virtualmonkey][:user_home]}/right_api_objects"
-  command "git checkout" +
-    " #{node[:virtualmonkey][:virtualmonkey][:right_api_objects_repo_branch]}"
-end
-
-# Install the dependencies of right_api_objects
-execute "bundle install" do
-  cwd "#{node[:virtualmonkey][:user_home]}/right_api_objects"
-  command "bundle install"
-end
-
-# Install the right_api_objects gem
-execute "rake install" do
-  cwd "#{node[:virtualmonkey][:user_home]}/right_api_objects"
-  command "rake install"
-end
-
 # Install Virtualmonkey dependencies
 log "  Installing Virtualmonkey dependencies"
 execute "bundle install" do
