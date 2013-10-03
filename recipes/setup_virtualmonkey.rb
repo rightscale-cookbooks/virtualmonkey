@@ -89,17 +89,6 @@ execute "bundle install" do
   command "bundle install --no-color --system"
 end
 
-# Create the VirtualMonkey configuration file from template. Currently, this
-# configuration file is not managed by Chef.
-log "  Creating VirtualMonkey configuration file from template"
-execute "copy virtualmonkey configuration file" do
-  cwd node[:virtualmonkey][:virtualmonkey_path]
-  command "cp config.yaml .config.yaml"
-  not_if do
-    ::File.exists?("#{node[:virtualmonkey][:virtualmonkey_path]}/.config.yaml")
-  end
-end
-
 ###############################################################################
 # The following code checks out the nextgen collateral.
 #
