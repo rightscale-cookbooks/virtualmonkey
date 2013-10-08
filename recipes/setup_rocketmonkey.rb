@@ -50,7 +50,7 @@ end
 # The rocketmonkey main configuration file is created from a template initially
 # allowing custom edits on the configuration. This template file is not
 # completely controlled by Chef yet.
-template "#{node[:virtualmonkey][:rocketmonkey_path]}/.rocketmonkey.yaml" do
+template "#{node[:virtualmonkey][:rocketmonkey_path]}/rocketmonkey.yaml" do
   source "rocketmonkey_config.yaml.erb"
   owner node[:virtualmonkey][:user]
   group node[:virtualmonkey][:group]
@@ -65,10 +65,12 @@ template "#{node[:virtualmonkey][:rocketmonkey_path]}/.rocketmonkey.yaml" do
 end
 
 # Copy the rocketmonkey configuration files to ~/.rocketmonkey if they are not present.
-# Currently, these configuration files are not managed by Chef.
+# Currently, these configuration files are not managed by Chef (except for rocketmonkey.yaml
+# which was created earlier).
 log "  Creating rocketmonkey configuration files from templates"
 [
   "googleget.yaml",
+  "rocketmonkey.yaml",
   "rocketmonkey.clouds.yaml",
   "rocketmonkey.regexs.yaml"
 ].each do |config_file|
