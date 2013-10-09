@@ -34,17 +34,17 @@ git node[:virtualmonkey][:rocketmonkey_path] do
   action :sync
 end
 
+execute "git checkout" do
+  cwd node[:virtualmonkey][:rocketmonkey_path]
+  command "git checkout #{node[:virtualmonkey][:rocketmonkey][:repo_branch]}"
+end
+
 # Create the ~/.rocketmonkey folder which is used to hold the user's rocket monkey
 # config files
 directory "#{node[:virtualmonkey][:user_home]}/.rocketmonkey" do
   owner node[:virtualmonkey][:user]
   group node[:virtualmonkey][:group]
   recursive true
-end
-
-execute "git checkout" do
-  cwd node[:virtualmonkey][:rocketmonkey_path]
-  command "git checkout #{node[:virtualmonkey][:rocketmonkey][:repo_branch]}"
 end
 
 # The rocketmonkey main configuration file is created from a template initially
