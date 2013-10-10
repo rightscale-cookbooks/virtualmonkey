@@ -39,11 +39,18 @@ execute "git checkout" do
   command "git checkout #{node[:virtualmonkey][:rocketmonkey][:repo_branch]}"
 end
 
+# Create the ~/.rocketmonkey folder which is used to hold the user's rocket monkey
+# config files
+directory "#{node[:virtualmonkey][:user_home]}/.rocketmonkey" do
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
+  recursive true
+end
+
 # The rocketmonkey main configuration file is created from a template initially
 # allowing custom edits on the configuration. This template file is not
-# completely controlled by Chef yet.
-#
-template "#{node[:virtualmonkey][:rocketmonkey_path]}/.rocketmonkey.yaml" do
+# yet completely controlled by Chef.
+template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" do
   source "rocketmonkey_config.yaml.erb"
   owner node[:virtualmonkey][:user]
   group node[:virtualmonkey][:group]
@@ -57,19 +64,19 @@ template "#{node[:virtualmonkey][:rocketmonkey_path]}/.rocketmonkey.yaml" do
   action :create_if_missing
 end
 
-# Copy the rocketmonkey configuration files if they are not present. Presently,
-# these configuration files are not managed by Chef.
-log "  Creating rocketmonkey configuration files from tempaltes"
+# Copy the rocketmonkey configuration files to ~/.rocketmonkey if they are not present.
+# Currently, these configuration files are not managed by Chef.
+log "  Creating rocketmonkey configuration files from templates"
 [
   "googleget.yaml",
   "rocketmonkey.clouds.yaml",
   "rocketmonkey.regexs.yaml"
 ].each do |config_file|
-  execute "copy '#{config_file}' to '.#{config_file}'" do
+  execute "copy '#{config_file}' to '~/.rocketmonkey/#{config_file}'" do
     cwd node[:virtualmonkey][:rocketmonkey_path]
-    command "cp #{config_file} .#{config_file}"
+    command "cp #{config_file} #{node[:virtualmonkey][:user_home]}/.rocketmonkey/#{config_file}"
     not_if do
-      ::File.exists?("#{node[:virtualmonkey][:rocketmonkey_path]}/.#{config_file}")
+      ::File.exists?("#{node[:virtualmonkey][:user_home]}/.rocketmonkey/#{config_file}")
     end
   end
 end
