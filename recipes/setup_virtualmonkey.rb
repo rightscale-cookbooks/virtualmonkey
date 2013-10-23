@@ -195,22 +195,6 @@ execute "populate cloud variables" do
     " --yes"
 end
 
-log "  Updating the ServerTemplate IDs for old collateral"
-execute "update_stids" do
-  cwd "#{node[:virtualmonkey][:user_home]}/" +
-    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
-  command "bin/update_stids --source linux --lineage" +
-    " #{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}.csv"
-  only_if do
-    File.exists?(
-      "#{node[:virtualmonkey][:user_home]}/" +
-      "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}/" +
-      "csv_sheets/" +
-      "#{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}.csv"
-    )
-  end
-end
-
 # Install the jsonlint tool for checking if the JSON file is valid
 cookbook_file "/usr/bin/jsonlint" do
   source "jsonlint"
