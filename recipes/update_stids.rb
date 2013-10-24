@@ -22,18 +22,18 @@ marker "recipe_start_rightscale" do
 end
 
 log "  Updating the ServerTemplate IDs for old collateral"
+csv_file = 
+  "#{node[:virtualmonkey][:user_home]}/" +
+  "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}/" +
+  "csv_sheets/" +
+  "#{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}.csv"
+
 execute "update_stids" do
   cwd "#{node[:virtualmonkey][:user_home]}/" +
     "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
   command "bin/update_stids --source linux --lineage" +
     " #{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}.csv"
-  only_if do
-    File.exists?(
-      "#{node[:virtualmonkey][:user_home]}/" +
-      "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}/" +
-      "csv_sheets/" +
-      "#{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}.csv"
-    )
-  end
+  only_if { File.exists?(csv_file) }
 end
 
+raise "Can't find #{csv_file}" unless File.exists?(csv_file)
