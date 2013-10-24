@@ -26,6 +26,8 @@ recipe "virtualmonkey::update_fog_credentials",
   "Setup or update existing credentials for fog configuration."
 recipe "virtualmonkey::setup_test_config",
   "Setup test specific configuration."
+recipe "virtualmonkey::update_stids",
+  "Update ServerTemplate IDs"
 
 {
   :aws_access_key_id => [
