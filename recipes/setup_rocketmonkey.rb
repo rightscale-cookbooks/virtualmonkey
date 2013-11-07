@@ -86,3 +86,10 @@ execute "Install rocketmonkey gem dependencies" do
   cwd node[:virtualmonkey][:rocketmonkey_path]
   command "bundle install --system"
 end
+
+log " Deploying icons for RocketMonkey" 
+execute "Deploying icons for RocketMonkey" do
+  cwd node[:virtualmonkey][:rocketmonkey_path]
+  command "bin/upload_images --target jenkins"
+end
+

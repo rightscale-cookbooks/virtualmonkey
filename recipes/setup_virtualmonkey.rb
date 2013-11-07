@@ -90,44 +90,6 @@ execute "bundle install" do
 end
 
 ###############################################################################
-# The following code checks out the nextgen collateral.
-#
-# Checkout the nextgen collateral project and configure it
-nextgen_collateral_name = "rightscale_cookbooks_private"
-nextgen_collateral_repo_url =
-  "git@github.com:rightscale/rightscale_cookbooks_private.git"
-
-log "  Checking out nextgen collateral repo to" +
-  " #{nextgen_collateral_name}"
-git "#{node[:virtualmonkey][:user_home]}/#{nextgen_collateral_name}" do
-  repository nextgen_collateral_repo_url
-  reference node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]
-  action :sync
-end
-
-execute "git checkout" do
-  cwd "#{node[:virtualmonkey][:user_home]}/#{nextgen_collateral_name}"
-  command "git checkout" +
-    " #{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}"
-end
-
-log "  Installing gems required for the nextgen collateral project"
-execute "bundle install on collateral" do
-  cwd "#{node[:virtualmonkey][:user_home]}/#{nextgen_collateral_name}"
-  command "bundle install --no-color --system"
-end
-
-# Populate all virtualmonkey cloud variables
-log "  Populating virtualmonkey cloud variables on nextgen collateral project"
-execute "populate cloud variables" do
-  cwd "#{node[:virtualmonkey][:user_home]}/#{nextgen_collateral_name}"
-  command "bundle exec monkey populate_all_cloud_vars" +
-    " --force" +
-    " --overwrite" +
-    " --yes"
-end
-
-###############################################################################
 
 
 # Installing right_cloud_api gem from the template file found in rightscale
