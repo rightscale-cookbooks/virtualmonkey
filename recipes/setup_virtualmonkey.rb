@@ -36,24 +36,6 @@ packages.each do |pkg|
   package pkg
 end
 
-# Checking out VirtualMonkey repository
-log "  Checking out VirtualMonkey repository from:" +
-  " #{node[:virtualmonkey][:virtualmonkey][:monkey_repo_url]}"
-git node[:virtualmonkey][:virtualmonkey_path] do
-  repository node[:virtualmonkey][:virtualmonkey][:monkey_repo_url]
-  reference node[:virtualmonkey][:virtualmonkey][:monkey_repo_branch]
-  action :sync
-end
-
-# By default chef changes the checked out branch to a branch named 'deploy'
-# locally. To make sure we can pull/push changes, let's checkout the correct
-# branch again!
-#
-execute "git checkout" do
-  cwd node[:virtualmonkey][:virtualmonkey_path]
-  command "git checkout #{node[:virtualmonkey][:virtualmonkey][:monkey_repo_branch]}"
-end
-
 # Check out right_api_object project from the Github repository
 log "  Checking out right_api_objects project from:" +
         " #{node[:virtualmonkey][:virtualmonkey][:right_api_objects_repo_url]}"
@@ -80,13 +62,6 @@ end
 execute "rake install" do
   cwd "#{node[:virtualmonkey][:user_home]}/right_api_objects"
   command "rake install"
-end
-
-# Install Virtualmonkey dependencies
-log "  Installing Virtualmonkey dependencies"
-execute "bundle install" do
-  cwd node[:virtualmonkey][:virtualmonkey_path]
-  command "bundle install --no-color --system"
 end
 
 ###############################################################################

@@ -66,26 +66,6 @@ node[:virtualmonkey][:rest][:gem_packages].each do |gem_name, gem_version|
   end
 end
 
-# Checkout the rest_connection project. The code is just checked out for
-# performing development. This code is not installed. The Gemfile in
-# virtualmonkey and rocketmonkey determine the version they require for
-# rest_connection.
-#
-git node[:virtualmonkey][:rest_connection_path] do
-  repository node[:virtualmonkey][:rest][:repo_url]
-  reference node[:virtualmonkey][:rest][:repo_branch]
-  action :sync
-end
-
-# By default chef changes the checked out branch to a branch named 'deploy'
-# locally. To make sure we can pull/push changes, let's checkout the correct
-# branch again!
-
-execute "git checkout" do
-  cwd node[:virtualmonkey][:rest_connection_path]
-  command "git checkout #{node[:virtualmonkey][:rest][:repo_branch]}"
-end
-
 log "  Creating rest_connection configuration directory"
 directory "#{node[:virtualmonkey][:user_home]}/.rest_connection" do
   owner node[:virtualmonkey][:user]
