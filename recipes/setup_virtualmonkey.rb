@@ -164,7 +164,7 @@ if node[:platform] =~ /ubuntu/
   end
 
   # Install the required gems for windows
-  gems = {"winrm" => "1.1.2", "trollop" => "2.0"}
+  gems = {"winrm" => "1.1.2", "trollop" => "2.0", "channelizer" => "0.0.1"}
   gems.each do |gem_name, gem_version|
     gem_package gem_name do
       gem_binary "/usr/bin/gem1.9.1"
