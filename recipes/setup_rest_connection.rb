@@ -113,7 +113,7 @@ unless node[:virtualmonkey][:rest][:ssh_pub_key].empty?
       " #{node[:virtualmonkey][:user_home]}/.ssh/authorized_keys"
     not_if do
       File.open("#{ENV['HOME']}/.ssh/authorized_keys").lines.any? do |line|
-        line.chomp == node[:jenkins][:public_key]
+        line.chomp == node[:'rs-jenkins'][:public_key]
       end
     end
   end
