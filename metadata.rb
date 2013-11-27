@@ -288,20 +288,6 @@ attribute "virtualmonkey/test_config/knife_pem_key",
   :required => "required",
   :recipes => ["virtualmonkey::setup_test_config"]
 
-attribute "virtualmonkey/virtualmonkey/monkey_repo_url",
-  :display_name => "VirtualMonkey Repo URL",
-  :description =>
-    "Git repository URL for VirtualMonkey",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_virtualmonkey"]
-
-attribute "virtualmonkey/virtualmonkey/monkey_repo_branch",
-  :display_name => "VirtualMonkey Repo Branch",
-  :description =>
-    "Git branch for VirtualMonkey",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_virtualmonkey"]
-
 attribute "virtualmonkey/virtualmonkey/collateral_repo_url",
   :display_name => "Collateral Repo URL",
   :description =>
@@ -336,6 +322,20 @@ attribute "virtualmonkey/virtualmonkey/windows_admin_password",
     "The Administrator password for connecting to Windows servers",
   :required => "required",
   :recipes => ["virtualmonkey::setup_virtualmonkey"]
+
+attribute "virtualmonkey/rocketmonkey/repo_url",
+  :display_name => "RocketMonkey Repo URL",
+  :description =>
+    "Git repository URL for RocketMonkey",
+  :required => "required",
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
+
+attribute "virtualmonkey/rocketmonkey/repo_branch",
+  :display_name => "RocketMonkey Repo Branch",
+  :description =>
+    "Git branch for VirtualMonkey project",
+  :required => "required",
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
 
 attribute "virtualmonkey/test/smtp_username",
   :display_name => "SMTP Username",
