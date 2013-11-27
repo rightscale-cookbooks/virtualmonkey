@@ -246,20 +246,6 @@ attribute "virtualmonkey/rest/ssh_pub_key",
   :required => "optional",
   :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "virtualmonkey/rest/repo_url",
-  :display_name => "Rest connection Repo URL",
-  :description =>
-    "Git URL for checking out rest_connection project",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_rest_connection"]
-
-attribute "virtualmonkey/rest/repo_branch",
-  :display_name => "Rest connection Repo Branch",
-  :description =>
-    "Git branch for checking out rest_connection project",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_rest_connection"]
-
 attribute "virtualmonkey/rest/azure_hack_on",
   :display_name => "Azure Hack ON/OFF",
   :description =>
@@ -350,20 +336,6 @@ attribute "virtualmonkey/virtualmonkey/windows_admin_password",
     "The Administrator password for connecting to Windows servers",
   :required => "required",
   :recipes => ["virtualmonkey::setup_virtualmonkey"]
-
-attribute "virtualmonkey/rocketmonkey/repo_url",
-  :display_name => "RocketMonkey Repo URL",
-  :description =>
-    "Git repository URL for RocketMonkey",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_rocketmonkey"]
-
-attribute "virtualmonkey/rocketmonkey/repo_branch",
-  :display_name => "RocketMonkey Repo Branch",
-  :description =>
-    "Git branch for VirtualMonkey project",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_rocketmonkey"]
 
 attribute "virtualmonkey/test/smtp_username",
   :display_name => "SMTP Username",
