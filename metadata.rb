@@ -246,20 +246,6 @@ attribute "virtualmonkey/rest/ssh_pub_key",
   :required => "optional",
   :recipes => ["virtualmonkey::setup_rest_connection"]
 
-attribute "virtualmonkey/rest/repo_url",
-  :display_name => "Rest connection Repo URL",
-  :description =>
-    "Git URL for checking out rest_connection project",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_rest_connection"]
-
-attribute "virtualmonkey/rest/repo_branch",
-  :display_name => "Rest connection Repo Branch",
-  :description =>
-    "Git branch for checking out rest_connection project",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_rest_connection"]
-
 attribute "virtualmonkey/rest/azure_hack_on",
   :display_name => "Azure Hack ON/OFF",
   :description =>
@@ -301,20 +287,6 @@ attribute "virtualmonkey/test_config/knife_pem_key",
     " chef server",
   :required => "required",
   :recipes => ["virtualmonkey::setup_test_config"]
-
-attribute "virtualmonkey/virtualmonkey/monkey_repo_url",
-  :display_name => "VirtualMonkey Repo URL",
-  :description =>
-    "Git repository URL for VirtualMonkey",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_virtualmonkey"]
-
-attribute "virtualmonkey/virtualmonkey/monkey_repo_branch",
-  :display_name => "VirtualMonkey Repo Branch",
-  :description =>
-    "Git branch for VirtualMonkey",
-  :required => "required",
-  :recipes => ["virtualmonkey::setup_virtualmonkey"]
 
 attribute "virtualmonkey/virtualmonkey/collateral_repo_url",
   :display_name => "Collateral Repo URL",
