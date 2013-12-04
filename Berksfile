@@ -1,4 +1,5 @@
 site :opscode
 
 metadata
-cookbook 'driveclient', github: 'rightscale/rackspace_cookbooks/driveclient', branch: 'master'
+cookbook 'rightscale', github: 'rightscale/rightscale_cookbooks', rel: 'cookbooks/rightscale', branch: 'master'
+cookbook 'driveclient', github: 'rightscale/rackspace_cookbooks', rel: 'driveclient', branch: 'master'

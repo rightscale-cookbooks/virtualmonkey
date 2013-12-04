@@ -20,7 +20,6 @@ depends "block_device"
 depends "sys"
 depends "ruby"
 
-recipe "logging::default"
 recipe "virtualmonkey::setup_git",
   "Setup Git configuration for virtualmonkey."
 recipe "virtualmonkey::setup_rest_connection",
