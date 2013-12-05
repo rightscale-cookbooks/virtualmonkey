@@ -76,17 +76,20 @@ Vagrant.configure("2") do |config|
         :server_root_password => 'rootpass',
         :server_debian_password => 'debpass',
         :server_repl_password => 'replpass'
+      },
+      :cloud => {
+        :provider => 'vagrant',
+        :public_ips => ["127.0.0.1"] 
+      }, 
+      :rightscale => {
+         :instance_uuid => 'vagrant123'
       }
-    }
+     }
 
     chef.run_list = [
         "recipe[logging::default]",
         "recipe[sys_firewall::default]",
         "recipe[sys_ntp::default]",
-        "recipe[rightscale::setup_server_tags]",
-        "recipe[rightscale::setup_timezone]",
-        "recipe[rightscale::setup_monitoring]",
-        "recipe[rightscale::install_tools]",
         "recipe[block_device::setup_ephemeral]",
         "recipe[sys::setup_swap]",
         "recipe[ruby::install_1_8]",
