@@ -87,19 +87,19 @@ Vagrant.configure("2") do |config|
      }
 
     chef.run_list = [
-        "recipe[logging::default]",
-        "recipe[sys_firewall::default]",
-        "recipe[sys_ntp::default]",
-        "recipe[block_device::setup_ephemeral]",
-        "recipe[sys::setup_swap]",
-        "recipe[ruby::install_1_8]",
+        #"recipe[logging::default]",
+        #"recipe[sys_firewall::default]",
+        #"recipe[sys_ntp::default]",
+        #"recipe[block_device::setup_ephemeral]",
+        #"recipe[sys::setup_swap]",
+        #"recipe[ruby::install_1_8]",
         "recipe[virtualmonkey::setup_git]",
         "recipe[virtualmonkey::setup_rest_connection]",
         "recipe[virtualmonkey::setup_virtualmonkey]",
         "recipe[virtualmonkey::setup_test_config]",
         "recipe[virtualmonkey::update_fog_credentials]",
-        "recipe[rs-jenkins::default]",
-        "recipe[rs-jenkins::do_attach_slave_at_boot]"
+        #"recipe[rs-jenkins::default]",
+        #"recipe[rs-jenkins::do_attach_slave_at_boot]"
         ]
   end
 end
