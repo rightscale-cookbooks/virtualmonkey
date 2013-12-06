@@ -83,10 +83,27 @@ Vagrant.configure("2") do |config|
       }, 
       :rightscale => {
          :instance_uuid => 'vagrant123'
+      },
+      :virtualmonkey => { 
+         :test => {
+           :smtp_username => 'WQA_SMTP_USERNAME',
+           :smtp_password => 'WQA_SMTP_PASSWORD'
+         },
+         :virtualmonkey => {
+           :right_api_objects_repo_url => 'git@github.com:rightscale/right_api_objects.git',
+           :right_api_objects_repo_branch => 'v0.1.2',
+           :collateral_repo_url => 'git@github.com:rightscale/rightscale_cookbooks_private.git',
+           :collateral_repo_branch => 'master',
+           :collateral_name => 'rightscale_cookbooks_private'
+         },
+         :git => {
+           :host_name => 'github.com',
+           :ssh_key => ''
+         }
       }
-     }
-
-    chef.run_list = [
+  }    
+ 
+   chef.run_list = [
         #"recipe[logging::default]",
         #"recipe[sys_firewall::default]",
         #"recipe[sys_ntp::default]",

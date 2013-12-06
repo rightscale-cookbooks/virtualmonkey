@@ -71,23 +71,24 @@ end
 # cookbook. The rightscale::install_tools installs this gem in sandbox ruby
 # and we want it in system ruby
 #
-log "  Installing the right_cloud_api gem"
 
-gem_file = "right_cloud_api-#{node[:virtualmonkey][:right_cloud_api_version]}.gem"
-cookbook_file "/tmp/#{gem_file}" do
-  cookbook "rightscale"
-  source gem_file
-end
+#log "  Installing the right_cloud_api gem"
 
-gem_package "right_cloud_api" do
-  gem_binary "/usr/bin/gem"
-  source "/tmp/#{gem_file}"
-  action :install
-end
+#gem_file = "right_cloud_api-#{node[:virtualmonkey][:right_cloud_api_version]}.gem"
+#cookbook_file "/tmp/#{gem_file}" do
+#  cookbook "rightscale"
+#  source gem_file
+#end
 
-file "/tmp/#{gem_file}" do
-  action :delete
-end
+#gem_package "right_cloud_api" do
+#  gem_binary "/usr/bin/gem"
+#  source "/tmp/#{gem_file}"
+#  action :install
+#end
+
+#file "/tmp/#{gem_file}" do
+#  action :delete
+#end
 
 log "  Obtaining collateral project name from repo URL"
 basename_cmd = Mixlib::ShellOut.new("basename" +
@@ -122,15 +123,15 @@ execute "bundle install on collateral" do
 end
 
 # Populate all virtualmonkey cloud variables
-log "  Populating virtualmonkey cloud variables"
-execute "populate cloud variables" do
-  cwd "#{node[:virtualmonkey][:user_home]}/" +
-    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
-  command "bundle exec monkey populate_all_cloud_vars" +
-    " --force" +
-    " --overwrite" +
-    " --yes"
-end
+#log "  Populating virtualmonkey cloud variables"
+#execute "populate cloud variables" do
+#  cwd "#{node[:virtualmonkey][:user_home]}/" +
+#    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
+#  command "bundle exec monkey populate_all_cloud_vars" +
+#    " --force" +
+#    " --overwrite" +
+#    " --yes"
+#end
 
 # Install the jsonlint tool for checking if the JSON file is valid
 cookbook_file "/usr/bin/jsonlint" do
@@ -149,19 +150,19 @@ end
 # for connecting to windows machines requires Ruby 1.9.1 and only Ubuntu
 # supports the installation of Ruby 1.9.1, the following setup will only be
 # fone on Ubuntu images.
-if node[:platform] =~ /ubuntu/
-  log "  Setting up Ruby 1.9 on Ubuntu"
-  version = Mixlib::ShellOut.new("ruby --version")
-  version.run_command.error!
-  # Install Ruby 1.9.1 if it is not already installed
-  if version.stdout =~ /1\.9/
-    log "  Ruby #{version.stdout} is already installed on this system."
-  else
-    # Installs ruby 1.9 with rubygems.
-    ["ruby1.9.1-full", "rubygems"].each do |pkg|
-      package pkg
-    end
-  end
+#if node[:platform] =~ /ubuntu/
+#  log "  Setting up Ruby 1.9 on Ubuntu"
+#  version = Mixlib::ShellOut.new("ruby --version")
+#  version.run_command.error!
+#  # Install Ruby 1.9.1 if it is not already installed
+#  if version.stdout =~ /1\.9/
+#    log "  Ruby #{version.stdout} is already installed on this system."
+#  else
+#    # Installs ruby 1.9 with rubygems.
+#    ["ruby1.9.1-full", "rubygems"].each do |pkg|
+#      package pkg
+#    end
+#  end
 
   # Install the required gems for windows
   gems = {"winrm" => "1.1.2", "trollop" => "2.0", "channelizer" => "0.0.1"}
