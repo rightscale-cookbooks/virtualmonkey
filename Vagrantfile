@@ -93,12 +93,12 @@ Vagrant.configure("2") do |config|
            :right_api_objects_repo_url => 'git@github.com:rightscale/right_api_objects.git',
            :right_api_objects_repo_branch => 'v0.1.2',
            :collateral_repo_url => 'git@github.com:rightscale/rightscale_cookbooks_private.git',
-           :collateral_repo_branch => 'master',
+           :collateral_repo_branch => 'white_13_08_acu134591_test_fixes_for_next_gen_collateral',
            :collateral_name => 'rightscale_cookbooks_private'
          },
          :git => {
            :host_name => 'github.com',
-           :ssh_key => ''
+           :ssh_key => '/home/antwan/.ssh/id_rsa.readme' 
          }
       }
   }    
@@ -110,11 +110,14 @@ Vagrant.configure("2") do |config|
         #"recipe[block_device::setup_ephemeral]",
         #"recipe[sys::setup_swap]",
         #"recipe[ruby::install_1_8]",
+        "recipe[apt::default]",
         "recipe[virtualmonkey::setup_git]",
         "recipe[virtualmonkey::setup_rest_connection]",
+        #"recipe[virtualmonkey::setup_rocketmonkey]",
         "recipe[virtualmonkey::setup_virtualmonkey]",
         "recipe[virtualmonkey::setup_test_config]",
         "recipe[virtualmonkey::update_fog_credentials]",
+        #"recipe[virtualmonkey::update_stids]"
         #"recipe[rs-jenkins::default]",
         #"recipe[rs-jenkins::do_attach_slave_at_boot]"
         ]
