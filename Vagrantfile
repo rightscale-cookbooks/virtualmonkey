@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -98,7 +99,7 @@ Vagrant.configure("2") do |config|
          },
          :git => {
            :host_name => 'github.com',
-           :ssh_key => '/home/antwan/.ssh/id_rsa.readme' 
+           :ssh_key => File.open('.ssh_git_config', 'rb') { |f| f.read } 
          }
       }
   }    
