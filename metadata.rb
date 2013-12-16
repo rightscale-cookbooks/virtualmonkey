@@ -10,6 +10,7 @@ supports "centos"
 supports "redhat"
 supports "ubuntu"
 
+depends "apt"
 #depends "rs-jenkins"
 depends "marker"
 #depends "logging"
