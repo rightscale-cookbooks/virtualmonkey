@@ -10,9 +10,15 @@ supports "centos"
 supports "redhat"
 supports "ubuntu"
 
-depends "rightscale"
-depends "rs-jenkins"
+depends "apt"
+#depends "rs-jenkins"
 depends "marker"
+#depends "logging"
+#depends "sys_firewall"
+#depends "sys_ntp"
+#depends "block_device"
+#depends "sys"
+#depends "ruby"
 
 recipe "virtualmonkey::setup_git",
   "Setup Git configuration for virtualmonkey."

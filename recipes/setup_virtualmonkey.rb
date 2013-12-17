@@ -71,23 +71,24 @@ end
 # cookbook. The rightscale::install_tools installs this gem in sandbox ruby
 # and we want it in system ruby
 #
-log "  Installing the right_cloud_api gem"
 
-gem_file = "right_cloud_api-#{node[:virtualmonkey][:right_cloud_api_version]}.gem"
-cookbook_file "/tmp/#{gem_file}" do
-  cookbook "rightscale"
-  source gem_file
-end
+#log "  Installing the right_cloud_api gem"
 
-gem_package "right_cloud_api" do
-  gem_binary "/usr/bin/gem"
-  source "/tmp/#{gem_file}"
-  action :install
-end
+#gem_file = "right_cloud_api-#{node[:virtualmonkey][:right_cloud_api_version]}.gem"
+#cookbook_file "/tmp/#{gem_file}" do
+#  cookbook "rightscale"
+#  source gem_file
+#end
 
-file "/tmp/#{gem_file}" do
-  action :delete
-end
+#gem_package "right_cloud_api" do
+#  gem_binary "/usr/bin/gem"
+#  source "/tmp/#{gem_file}"
+#  action :install
+#end
+
+#file "/tmp/#{gem_file}" do
+#  action :delete
+#end
 
 log "  Obtaining collateral project name from repo URL"
 basename_cmd = Mixlib::ShellOut.new("basename" +
@@ -96,7 +97,7 @@ basename_cmd = Mixlib::ShellOut.new("basename" +
 basename_cmd.run_command
 basename_cmd.error!
 
-node[:virtualmonkey][:virtualmonkey][:collateral_name] = basename_cmd.stdout.chomp
+node.default[:virtualmonkey][:virtualmonkey][:collateral_name] = basename_cmd.stdout.chomp
 
 log "  Checking out collateral repo to" +
   " #{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
@@ -122,15 +123,15 @@ execute "bundle install on collateral" do
 end
 
 # Populate all virtualmonkey cloud variables
-log "  Populating virtualmonkey cloud variables"
-execute "populate cloud variables" do
-  cwd "#{node[:virtualmonkey][:user_home]}/" +
-    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
-  command "bundle exec monkey populate_all_cloud_vars" +
-    " --force" +
-    " --overwrite" +
-    " --yes"
-end
+#log "  Populating virtualmonkey cloud variables"
+#execute "populate cloud variables" do
+#  cwd "#{node[:virtualmonkey][:user_home]}/" +
+#    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
+#  command "bundle exec monkey populate_all_cloud_vars" +
+#    " --force" +
+#    " --overwrite" +
+#    " --yes"
+#end
 
 # Install the jsonlint tool for checking if the JSON file is valid
 cookbook_file "/usr/bin/jsonlint" do

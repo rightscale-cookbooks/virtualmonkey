@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -52,8 +53,8 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  config.ssh.max_tries = 40
-  config.ssh.timeout   = 120
+  # config.ssh.max_tries = 40
+  # config.ssh.timeout   = 120
 
   # The path to the Berksfile to use with Vagrant Berkshelf
   # config.berkshelf.berksfile_path = "./Berksfile"
@@ -76,11 +77,50 @@ Vagrant.configure("2") do |config|
         :server_root_password => 'rootpass',
         :server_debian_password => 'debpass',
         :server_repl_password => 'replpass'
+      },
+      :cloud => {
+        :provider => 'vagrant',
+        :public_ips => ["127.0.0.1"] 
+      }, 
+      :rightscale => {
+         :instance_uuid => 'vagrant123'
+      },
+      :virtualmonkey => { 
+         :test => {
+           :smtp_username => 'WQA_SMTP_USERNAME',
+           :smtp_password => 'WQA_SMTP_PASSWORD'
+         },
+         :virtualmonkey => {
+           :right_api_objects_repo_url => 'git@github.com:rightscale/right_api_objects.git',
+           :right_api_objects_repo_branch => 'v0.1.2',
+           :collateral_repo_url => 'git@github.com:rightscale/rightscale_cookbooks_private.git',
+           :collateral_repo_branch => 'white_13_08_acu134591_test_fixes_for_next_gen_collateral',
+           :collateral_name => 'rightscale_cookbooks_private'
+         },
+         :git => {
+           :host_name => 'github.com',
+           :ssh_key => File.open('.ssh_git_config', 'rb') { |f| f.read } 
+         }
       }
-    }
-
-    chef.run_list = [
-        "recipe[virtualmonkey::default]"
-    ]
+  }    
+ 
+   chef.run_list = [
+        #"recipe[logging::default]",
+        #"recipe[sys_firewall::default]",
+        #"recipe[sys_ntp::default]",
+        #"recipe[block_device::setup_ephemeral]",
+        #"recipe[sys::setup_swap]",
+        #"recipe[ruby::install_1_8]",
+        "recipe[apt::default]",
+        "recipe[virtualmonkey::setup_git]",
+        "recipe[virtualmonkey::setup_rest_connection]",
+        #"recipe[virtualmonkey::setup_rocketmonkey]",
+        "recipe[virtualmonkey::setup_virtualmonkey]",
+        "recipe[virtualmonkey::setup_test_config]",
+        "recipe[virtualmonkey::update_fog_credentials]",
+        #"recipe[virtualmonkey::update_stids]"
+        #"recipe[rs-jenkins::default]",
+        #"recipe[rs-jenkins::do_attach_slave_at_boot]"
+        ]
   end
 end
