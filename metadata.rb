@@ -350,3 +350,48 @@ attribute "virtualmonkey/test/smtp_password",
     "The SMTP password for lamp's check smtp test",
   :required => "required",
   :recipes => ["virtualmonkey::setup_test_config"]
+
+{
+  :east => [
+    "0 - AWS-East",
+    "Default ssh key for AWS account"
+  ],
+  :eu => [
+    "1 - AWS EU",
+    "Default ssh key for AWS account"
+  ],
+  :us_west => [
+    "2 - AWS US-West",
+    "Default ssh key for AWS account"
+  ],
+  :ap_singapore => [
+    "3 - AWS AP-Singapore",
+    "Default ssh key for AWS account"
+  ],
+  :ap_tokyo => [
+    "4 - AWS AP-Tokyo",
+    "Default ssh key for AWS account"
+  ],
+  :us_oregon => [
+    "5 - AWS US-Oregon",
+    "Default ssh key for AWS account"
+  ],
+  :sa_sao_paolo => [
+    "6 - AWS SA-Sao Paulo",
+    "Default ssh key for AWS account"
+  ],
+  :ap_sydney => [
+    "7 - AWS AP-Sydney",
+    "Default ssh key for AWS account"
+  ],
+}.each do |attribute_name, value|
+  display_name, description = value
+
+  attribute "virtualmonkey/aws_default_ssh_key_ids/#{attribute_name}",
+    :display_name => display_name,
+    :description => description,
+    :required => "required",
+    :recipes => ["virtualmonkey::update_aws_default_keys"]
+end
+
+
