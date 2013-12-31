@@ -1,0 +1,58 @@
+---
+#
+# Timeouts
+#
+:booting_timeout: 3601
+:completed_timeout: 3602
+:default_timeout: 3603
+:error_timeout: 3604
+:failed_timeout: 3605
+:inactive_timeout: 3606
+:operational_timeout: 3607
+:snapshot_timeout: 3608
+:stopped_timeout: 3609
+:terminated_timeout: 3610
+
+#
+# Number of lines of the system log to dump on errors
+#
+:system_log_dump_num_lines: 100
+
+#
+# Colorized text
+#
+:colorized_text: show
+
+#
+# feature mixin
+#
+:feature_mixins: spanning
+
+#
+# DNS domain
+#
+:dns_domain: "dnsmadeeasy_new"
+
+#
+# DNS choice
+#
+:dns_choice: "text:DNSMadeEasy"
+
+#
+# aws_default_ssh_key_ids - AWS SSH keys in an array:
+#
+# 0 - AWS-East
+# 1 - AWS EU
+# 2 - AWS US-West
+# 3 - AWS AP-Singapore
+# 4 - AWS AP-Tokyo
+# 5 - AWS US-Oregon
+# 6 - AWS SA-Sao Paulo
+# 7 - AWS AP-Sydney
+#
+# By default the values are populated for PUBLISH in MY. Change this to contain the IDs for your environment/shard.
+# If you don't have an ssh key, then leave it out but leave the comma. Example:
+#
+:aws_default_ssh_key_ids: <% @aws_default_ssh_key_ids_east %> 
+#
+
