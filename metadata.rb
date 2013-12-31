@@ -391,7 +391,7 @@ attribute "virtualmonkey/test/smtp_password",
     :display_name => display_name,
     :description => description,
     :required => "required",
-    :recipes => ["virtualmonkey::update_aws_default_keys"]
+    :recipes => ["virtualmonkey::setup_virtualmonkey"]
 end
 
 
