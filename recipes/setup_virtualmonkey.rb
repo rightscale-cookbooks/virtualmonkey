@@ -121,6 +121,20 @@ execute "bundle install on collateral" do
   command "bundle install --no-color --system"
 end
 
+# The virtualmonkey main configuration file is creted from a template initially
+# allowing custom edits on the configuration.  This template file is not
+# yet completely controlled by Chef.
+template "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/config.yaml" do
+  source "virtualmonkey_config.yaml.erb"
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
+  mode 0644
+  variables(
+    :east => node[:virtualmonkey][:aws_default_ssh_key_ids][:east] 
+  )
+  action :create_if_missing
+end
+
 # Populate all virtualmonkey cloud variables
 log "  Populating virtualmonkey cloud variables"
 execute "populate cloud variables" do
@@ -175,20 +189,6 @@ if node[:platform] =~ /ubuntu/
   directory "#{node[:virtualmonkey][:user_home]}/.virtualmonkey" do
     owner node[:virtualmonkey][:user]
     group node[:virtualmonkey][:group]
-  end
-
-  # The virtualmonkey main configuration file is creted from a template initially
-  # allowing custom edits on the configuration.  This template file is not
-  # yet completely controlled by Chef.
-  template "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/config.yaml" do
-    source "virtualmonkey_config.yaml.erb"
-    owner node[:virtualmonkey][:user]
-    group node[:virtualmonkey][:group]
-    mode 0644
-    variables(
-      :aws_default_ssh_key_ids_east => node[:virtualmonkey][:aws_default_ssh_key_ids][:east] 
-    )
-    action :create_if_missing
   end
 
   file "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/windows_password" do
