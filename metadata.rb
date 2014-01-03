@@ -393,11 +393,12 @@ attribute "virtualmonkey/test/smtp_password",
     "323389001"
   ],
 }.each do |attribute_name, value|
-  display_name, description = value
+  display_name, description, default = value
 
   attribute "virtualmonkey/aws_default_ssh_key_ids/#{attribute_name}",
     :display_name => display_name,
     :description => description,
+    :default => default,
     :required => "optional",
     :recipes => ["virtualmonkey::setup_virtualmonkey"]
 end
