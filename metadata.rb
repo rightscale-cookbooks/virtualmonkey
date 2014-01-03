@@ -390,7 +390,7 @@ attribute "virtualmonkey/test/smtp_password",
   attribute "virtualmonkey/aws_default_ssh_key_ids/#{attribute_name}",
     :display_name => display_name,
     :description => description,
-    :required => "required",
+    :required => "optional",
     :recipes => ["virtualmonkey::setup_virtualmonkey"]
 end
 
