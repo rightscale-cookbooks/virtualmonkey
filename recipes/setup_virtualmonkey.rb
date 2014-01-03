@@ -124,6 +124,12 @@ end
 # The virtualmonkey main configuration file is creted from a template initially
 # allowing custom edits on the configuration.  This template file is not
 # yet completely controlled by Chef.
+
+directory "#{node[:virtualmonkey][:user_home]}/.virtualmonkey" do
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
+end
+
 template "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/config.yaml" do
   source "virtualmonkey_config.yaml.erb"
   owner node[:virtualmonkey][:user]
@@ -191,11 +197,6 @@ if node[:platform] =~ /ubuntu/
       gem_binary "/usr/bin/gem1.9.1"
       version gem_version
     end
-  end
-
-  directory "#{node[:virtualmonkey][:user_home]}/.virtualmonkey" do
-    owner node[:virtualmonkey][:user]
-    group node[:virtualmonkey][:group]
   end
 
   file "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/windows_password" do
