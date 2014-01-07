@@ -29,7 +29,7 @@ recipe "virtualmonkey::setup_test_config",
   "Setup test specific configuration."
 recipe "virtualmonkey::update_stids",
   "Update ServerTemplate IDs"
-recipe "ruby",
+recipe "virtualmonkey::ruby",
   "Select which version of ruby to install"
 
 {
