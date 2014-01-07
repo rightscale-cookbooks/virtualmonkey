@@ -409,6 +409,6 @@ end
 attribute "virtualmonkey/ruby/version",
   :display_name => "Ruby Version",
   :description  => "Version of ruby to install",
-  :required     => "required",
+  :required     => "optional",
   :recipes      => ["virtualmonkey::ruby"],
   :default      => "ruby 1.9"
