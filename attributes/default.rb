@@ -206,3 +206,6 @@ default[:virtualmonkey][:aws_default_ssh_key_ids][:ap_tokyo] = '324190'
 default[:virtualmonkey][:aws_default_ssh_key_ids][:us_oregon] = '255379001'
 default[:virtualmonkey][:aws_default_ssh_key_ids][:sa_sao_paolo] = '216453001' 
 default[:virtualmonkey][:aws_default_ssh_key_ids][:ap_sydney] = '323389001'
+
+# ruby version
+default[:virtualmonkey][:ruby][:version] = 'ruby 1.9'

@@ -13,6 +13,7 @@ supports "ubuntu"
 depends "rightscale"
 depends "rs-jenkins"
 depends "marker"
+depends "ruby"
 
 recipe "virtualmonkey::setup_git",
   "Setup Git configuration for virtualmonkey."
@@ -28,6 +29,8 @@ recipe "virtualmonkey::setup_test_config",
   "Setup test specific configuration."
 recipe "virtualmonkey::update_stids",
   "Update ServerTemplate IDs"
+recipe "ruby",
+  "Select which version of ruby to install"
 
 {
   :aws_access_key_id => [
@@ -403,4 +406,9 @@ attribute "virtualmonkey/test/smtp_password",
     :recipes => ["virtualmonkey::setup_virtualmonkey"]
 end
 
-
+attribute "virtualmonkey/ruby/version",
+  :display_name => "Ruby Version",
+  :description  => "Version of ruby to install",
+  :required     => "required",
+  :recipes      => ["virtualmonkey::ruby"],
+  :default      => "ruby 1.9"
