@@ -67,6 +67,8 @@ if node[:virtualmonkey][:ruby][:version] == "ruby 1.9"
       "rspec" => "2.14.1",
       "json" => "1.7.7"
   }
+  # Since ruby-debug was renamed to ruby-debug19 we have to delete the old entry
+  node[:virtualmonkey][:rest][:gem_packages].delete "ruby-debug"
 end
 
 # Installing gem dependencies
