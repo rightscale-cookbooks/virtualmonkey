@@ -56,16 +56,6 @@ execute "update rubygems" do
   command update_rubygems_cmd
 end
 
-# Installing gem dependencies
-log "  Installing gems requierd by rest_connection"
-node[:virtualmonkey][:rest][:gem_packages].each do |gem_name, gem_version|
-  gem_package gem_name do
-    gem_binary "/usr/bin/gem"
-    version gem_version
-    action :install
-  end
-end
-
 log "  Creating rest_connection configuration directory"
 directory "#{node[:virtualmonkey][:user_home]}/.rest_connection" do
   owner node[:virtualmonkey][:user]
