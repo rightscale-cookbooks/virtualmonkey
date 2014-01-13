@@ -48,8 +48,7 @@ directory "#{node[:virtualmonkey][:user_home]}/.rocketmonkey" do
 end
 
 # The rocketmonkey main configuration file is created from a template initially
-# allowing custom edits on the configuration. This template file is not
-# yet completely controlled by Chef.
+# allowing custom edits on the configuration.
 template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" do
   source "rocketmonkey_config.yaml.erb"
   owner node[:virtualmonkey][:user]
@@ -66,11 +65,24 @@ template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" d
   action :create_if_missing
 end
 
+# The googleget configuration file is created from a template initially
+# allowing custom edits on the configuration.
+template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/googleget.yaml" do
+  source "rocketmonkey_googleget_config.yaml.erb"
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
+  mode 0644
+  variables(
+      :google_drive_user => node[:virtualmonkey][:rocketmonkey][:google_drive_user],
+      :google_drive_password => node[:virtualmonkey][:rocketmonkey][:google_drive_password]
+  )
+  action :create_if_missing
+end
+
 # Copy the rocketmonkey configuration files to ~/.rocketmonkey if they are not present.
 # Currently, these configuration files are not managed by Chef.
 log "  Creating rocketmonkey configuration files from templates"
 [
-  "googleget.yaml",
   "rocketmonkey.clouds.yaml",
   "rocketmonkey.regexs.yaml"
 ].each do |config_file|

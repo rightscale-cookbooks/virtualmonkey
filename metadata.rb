@@ -347,6 +347,20 @@ attribute "virtualmonkey/rocketmonkey/servertemplate_mapping_file_name",
   :required => "required",
   :recipes => ["virtualmonkey::setup_rocketmonkey"]
 
+attribute "virtualmonkey/rocketmonkey/google_drive_user",
+  :display_name => "Google Drive User",
+  :description =>
+      "User name used by the googleget and googleput scripts for downlaoding and uploading test matrices from Google Drive.",
+  :required => "required",
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
+
+attribute "virtualmonkey/rocketmonkey/google_drive_password",
+  :display_name => "Google Drive Password",
+  :description =>
+      "Password used by the googleget and googleput scripts for downlaoding and uploading test matrices from Google Drive.",
+  :required => "required",
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
+
 attribute "virtualmonkey/test/smtp_username",
   :display_name => "SMTP Username",
   :description =>
