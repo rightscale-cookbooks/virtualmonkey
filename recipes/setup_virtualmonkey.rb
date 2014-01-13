@@ -179,9 +179,3 @@ file "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/windows_password" do
   group node[:virtualmonkey][:group]
   mode 0600
 end
-
-# Create monkey specific motd (message of the day)
-remote_file "/etc/motd" do
-  source "etc_motd"
-  mode 0777
-end
