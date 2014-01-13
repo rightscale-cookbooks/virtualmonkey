@@ -59,7 +59,8 @@ template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" d
     :jenkins_user => node[:'rs-jenkins'][:server][:user_name],
     :jenkins_password => node[:'rs-jenkins'][:server][:password],
     :right_acct_id => node[:virtualmonkey][:rest][:right_acct_id],
-    :right_subdomain => node[:virtualmonkey][:rest][:right_subdomain]
+    :right_subdomain => node[:virtualmonkey][:rest][:right_subdomain],
+    :collateral_repo_name => node[:virtualmonkey][:virtualmonkey][:collateral_name]
   )
   action :create_if_missing
 end
@@ -87,7 +88,7 @@ execute "Install rocketmonkey gem dependencies" do
   command "bundle install --system"
 end
 
-log " Deploying icons for RocketMonkey" 
+log " Deploying icons for RocketMonkey"
 execute "Deploying icons for RocketMonkey" do
   cwd node[:virtualmonkey][:rocketmonkey_path]
   command "bin/upload_images --target jenkins"

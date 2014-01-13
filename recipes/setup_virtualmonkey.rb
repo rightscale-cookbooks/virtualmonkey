@@ -172,39 +172,16 @@ directory "/var/log/virtualmonkey" do
   recursive true
 end
 
-# Setup Windows related ruby environment and gems. Since the "winrm" gem used
-# for connecting to windows machines requires Ruby 1.9.1 and only Ubuntu
-# supports the installation of Ruby 1.9.1, the following setup will only be
-# fone on Ubuntu images.
-if node[:platform] =~ /ubuntu/
-  log "  Setting up Ruby 1.9 on Ubuntu"
-  version = Mixlib::ShellOut.new("ruby --version")
-  version.run_command.error!
-  # Install Ruby 1.9.1 if it is not already installed
-  if version.stdout =~ /1\.9/
-    log "  Ruby #{version.stdout} is already installed on this system."
-  else
-    # Installs ruby 1.9 with rubygems.
-    ["ruby1.9.1-full", "rubygems"].each do |pkg|
-      package pkg
-    end
-  end
+# Create windows administrator password
+file "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/windows_password" do
+  content node[:virtualmonkey][:virtualmonkey][:windows_admin_password]
+  owner node[:virtualmonkey][:user]
+  group node[:virtualmonkey][:group]
+  mode 0600
+end
 
-  # Install the required gems for windows
-  gems = {"winrm" => "1.1.2", "trollop" => "2.0", "channelizer" => "0.0.1"}
-  gems.each do |gem_name, gem_version|
-    gem_package gem_name do
-      gem_binary "/usr/bin/gem1.9.1"
-      version gem_version
-    end
-  end
-
-  file "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/windows_password" do
-    content node[:virtualmonkey][:virtualmonkey][:windows_admin_password]
-    owner node[:virtualmonkey][:user]
-    group node[:virtualmonkey][:group]
-    mode 0600
-  end
-else
-  log "  Not a ubuntu server. Setup for windows testing is skipped."
+# Create monkey specific motd (message of the day)
+remote_file "/etc/motd" do
+  source "etc_motd"
+  mode 0777
 end

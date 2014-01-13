@@ -340,6 +340,13 @@ attribute "virtualmonkey/rocketmonkey/repo_branch",
   :required => "required",
   :recipes => ["virtualmonkey::setup_rocketmonkey"]
 
+attribute "virtualmonkey/rocketmonkey/servertemplate_mapping_file_name",
+  :display_name => "Rocket Monkey Server Template Mapping File Name",
+  :description =>
+      "The server template mapping file name you want the Rocket Monkey to use when generating Virtual Monkey Jenkins jobs. This is required for all next generation collateral. If you are using legacy collateral, just put an 'X' in this input.",
+  :required => "required",
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
+
 attribute "virtualmonkey/test/smtp_username",
   :display_name => "SMTP Username",
   :description =>
