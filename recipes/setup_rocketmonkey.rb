@@ -60,7 +60,8 @@ template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" d
     :jenkins_password => node[:'rs-jenkins'][:server][:password],
     :right_acct_id => node[:virtualmonkey][:rest][:right_acct_id],
     :right_subdomain => node[:virtualmonkey][:rest][:right_subdomain],
-    :collateral_repo_name => node[:virtualmonkey][:virtualmonkey][:collateral_name]
+    :collateral_repo_name => node[:virtualmonkey][:virtualmonkey][:collateral_name],
+    :servertemplate_mapping_file_name => node[:virtualmonkey][:rocketmonkey][:servertemplate_mapping_file_name]
   )
   action :create_if_missing
 end
