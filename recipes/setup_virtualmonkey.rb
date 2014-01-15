@@ -136,14 +136,14 @@ template "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/config.yaml" do
   group node[:virtualmonkey][:group]
   mode 0644
   variables(
-    :east         => node[:virtualmonkey][:aws_default_ssh_key_ids][:east],
-    :eu           => node[:virtualmonkey][:aws_default_ssh_key_ids][:eu],
-    :us_west      => node[:virtualmonkey][:aws_default_ssh_key_ids][:us_west],
-    :ap_singapore => node[:virtualmonkey][:aws_default_ssh_key_ids][:ap_singapore],
-    :ap_tokyo     => node[:virtualmonkey][:aws_default_ssh_key_ids][:ap_tokyo],
-    :us_oregon    => node[:virtualmonkey][:aws_default_ssh_key_ids][:us_oregon],
-    :sa_sao_paolo => node[:virtualmonkey][:aws_default_ssh_key_ids][:sa_sao_paolo],
-    :ap_sydney    => node[:virtualmonkey][:aws_default_ssh_key_ids][:ap_sydney]
+    :east         => node[:virtualmonkey][:aws_default_ssh_key_ids]['east'],
+    :eu           => node[:virtualmonkey][:aws_default_ssh_key_ids]['eu'],
+    :us_west      => node[:virtualmonkey][:aws_default_ssh_key_ids]['us_west'],
+    :ap_singapore => node[:virtualmonkey][:aws_default_ssh_key_ids]['ap_singapore'],
+    :ap_tokyo     => node[:virtualmonkey][:aws_default_ssh_key_ids]['ap_tokyo'],
+    :us_oregon    => node[:virtualmonkey][:aws_default_ssh_key_ids]['us_oregon'],
+    :sa_sao_paolo => node[:virtualmonkey][:aws_default_ssh_key_ids]['sa_sao_paolo'],
+    :ap_sydney    => node[:virtualmonkey][:aws_default_ssh_key_ids]['ap_sydney']
   )
   action :create_if_missing
 end
