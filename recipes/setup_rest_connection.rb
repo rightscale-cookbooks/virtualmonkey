@@ -57,8 +57,8 @@ execute "update rubygems" do
 end
 
 # If were running on ruby 1.9 override the rest_connection and other basic gem versions
-if node[:virtualmonkey][:ruby][:version] == "ruby 1.9"
-  node[:virtualmonkey][:rest][:gem_packages] = {
+if node['virtualmonkey']['ruby']['version'] == "ruby 1.9"
+  node['virtualmonkey']['rest']['gem_packages'] = {
       "rake" => "10.1.0",
       "bundler" => "1.3.5",
       "ruby-debug19" => "0.11.6",
@@ -68,7 +68,7 @@ if node[:virtualmonkey][:ruby][:version] == "ruby 1.9"
       "json" => "1.7.7"
   }
   # Since ruby-debug was renamed to ruby-debug19 we have to delete the old entry
-  node[:virtualmonkey][:rest][:gem_packages].delete "ruby-debug"
+  node['virtualmonkey']['rest']['gem_packages'].delete "ruby-debug"
 end
 
 # Installing gem dependencies

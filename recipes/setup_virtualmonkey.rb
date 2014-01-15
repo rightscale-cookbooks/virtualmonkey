@@ -121,29 +121,27 @@ execute "bundle install on collateral" do
   command "bundle install --no-color --system"
 end
 
-# The virtualmonkey main configuration file is creted from a template initially
-# allowing custom edits on the configuration.  This template file is not
-# yet completely controlled by Chef.
-
-directory "#{node[:virtualmonkey][:user_home]}/.virtualmonkey" do
-  owner node[:virtualmonkey][:user]
-  group node[:virtualmonkey][:group]
+# The virtualmonkey main configuration file is created from a template initially
+# allowing custom edits on the configuration.
+directory "#{node['virtualmonkey']['user_home']}/.virtualmonkey" do
+  owner node['virtualmonkey']['user']
+  group node['virtualmonkey']['group']
 end
 
-template "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/config.yaml" do
+template "#{node['virtualmonkey']['user_home']}/.virtualmonkey/config.yaml" do
   source "virtualmonkey_config.yaml.erb"
-  owner node[:virtualmonkey][:user]
-  group node[:virtualmonkey][:group]
+  owner node['virtualmonkey']['user']
+  group node['virtualmonkey']['group']
   mode 0644
   variables(
-    :east         => node[:virtualmonkey][:aws_default_ssh_key_ids]['east'],
-    :eu           => node[:virtualmonkey][:aws_default_ssh_key_ids]['eu'],
-    :us_west      => node[:virtualmonkey][:aws_default_ssh_key_ids]['us_west'],
-    :ap_singapore => node[:virtualmonkey][:aws_default_ssh_key_ids]['ap_singapore'],
-    :ap_tokyo     => node[:virtualmonkey][:aws_default_ssh_key_ids]['ap_tokyo'],
-    :us_oregon    => node[:virtualmonkey][:aws_default_ssh_key_ids]['us_oregon'],
-    :sa_sao_paolo => node[:virtualmonkey][:aws_default_ssh_key_ids]['sa_sao_paolo'],
-    :ap_sydney    => node[:virtualmonkey][:aws_default_ssh_key_ids]['ap_sydney']
+    :east         => node['virtualmonkey']['aws_default_ssh_key_ids']['east'],
+    :eu           => node['virtualmonkey']['aws_default_ssh_key_ids']['eu'],
+    :us_west      => node['virtualmonkey']['aws_default_ssh_key_ids']['us_west'],
+    :ap_singapore => node['virtualmonkey']['aws_default_ssh_key_ids']['ap_singapore'],
+    :ap_tokyo     => node['virtualmonkey']['aws_default_ssh_key_ids']['ap_tokyo'],
+    :us_oregon    => node['virtualmonkey']['aws_default_ssh_key_ids']['us_oregon'],
+    :sa_sao_paolo => node['virtualmonkey']['aws_default_ssh_key_ids']['sa_sao_paolo'],
+    :ap_sydney    => node['virtualmonkey']['aws_default_ssh_key_ids']['ap_sydney']
   )
   action :create_if_missing
 end
@@ -173,9 +171,9 @@ directory "/var/log/virtualmonkey" do
 end
 
 # Create windows administrator password
-file "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/windows_password" do
-  content node[:virtualmonkey][:virtualmonkey][:windows_admin_password]
-  owner node[:virtualmonkey][:user]
-  group node[:virtualmonkey][:group]
+file "#{node['virtualmonkey']['user_home']}/.virtualmonkey/windows_password" do
+  content node['virtualmonkey']['virtualmonkey']['windows_admin_password']
+  owner node['virtualmonkey']['user']
+  group node['virtualmonkey']['group']
   mode 0600
 end
