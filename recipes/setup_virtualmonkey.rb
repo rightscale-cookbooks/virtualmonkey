@@ -121,6 +121,31 @@ execute "bundle install on collateral" do
   command "bundle install --no-color --system"
 end
 
+# The virtualmonkey main configuration file is created from a template initially
+# allowing custom edits on the configuration.
+directory "#{node['virtualmonkey']['user_home']}/.virtualmonkey" do
+  owner node['virtualmonkey']['user']
+  group node['virtualmonkey']['group']
+end
+
+template "#{node['virtualmonkey']['user_home']}/.virtualmonkey/config.yaml" do
+  source "virtualmonkey_config.yaml.erb"
+  owner node['virtualmonkey']['user']
+  group node['virtualmonkey']['group']
+  mode 0644
+  variables(
+    :east         => node['virtualmonkey']['aws_default_ssh_key_ids']['east'],
+    :eu           => node['virtualmonkey']['aws_default_ssh_key_ids']['eu'],
+    :us_west      => node['virtualmonkey']['aws_default_ssh_key_ids']['us_west'],
+    :ap_singapore => node['virtualmonkey']['aws_default_ssh_key_ids']['ap_singapore'],
+    :ap_tokyo     => node['virtualmonkey']['aws_default_ssh_key_ids']['ap_tokyo'],
+    :us_oregon    => node['virtualmonkey']['aws_default_ssh_key_ids']['us_oregon'],
+    :sa_sao_paolo => node['virtualmonkey']['aws_default_ssh_key_ids']['sa_sao_paolo'],
+    :ap_sydney    => node['virtualmonkey']['aws_default_ssh_key_ids']['ap_sydney']
+  )
+  action :create_if_missing
+end
+
 # Populate all virtualmonkey cloud variables
 log "  Populating virtualmonkey cloud variables"
 execute "populate cloud variables" do
@@ -145,44 +170,10 @@ directory "/var/log/virtualmonkey" do
   recursive true
 end
 
-# Setup Windows related ruby environment and gems. Since the "winrm" gem used
-# for connecting to windows machines requires Ruby 1.9.1 and only Ubuntu
-# supports the installation of Ruby 1.9.1, the following setup will only be
-# fone on Ubuntu images.
-if node[:platform] =~ /ubuntu/
-  log "  Setting up Ruby 1.9 on Ubuntu"
-  version = Mixlib::ShellOut.new("ruby --version")
-  version.run_command.error!
-  # Install Ruby 1.9.1 if it is not already installed
-  if version.stdout =~ /1\.9/
-    log "  Ruby #{version.stdout} is already installed on this system."
-  else
-    # Installs ruby 1.9 with rubygems.
-    ["ruby1.9.1-full", "rubygems"].each do |pkg|
-      package pkg
-    end
-  end
-
-  # Install the required gems for windows
-  gems = {"winrm" => "1.1.2", "trollop" => "2.0", "channelizer" => "0.0.1"}
-  gems.each do |gem_name, gem_version|
-    gem_package gem_name do
-      gem_binary "/usr/bin/gem1.9.1"
-      version gem_version
-    end
-  end
-
-  directory "#{node[:virtualmonkey][:user_home]}/.virtualmonkey" do
-    owner node[:virtualmonkey][:user]
-    group node[:virtualmonkey][:group]
-  end
-
-  file "#{node[:virtualmonkey][:user_home]}/.virtualmonkey/windows_password" do
-    content node[:virtualmonkey][:virtualmonkey][:windows_admin_password]
-    owner node[:virtualmonkey][:user]
-    group node[:virtualmonkey][:group]
-    mode 0600
-  end
-else
-  log "  Not a ubuntu server. Setup for windows testing is skipped."
+# Create windows administrator password
+file "#{node['virtualmonkey']['user_home']}/.virtualmonkey/windows_password" do
+  content node['virtualmonkey']['virtualmonkey']['windows_admin_password']
+  owner node['virtualmonkey']['user']
+  group node['virtualmonkey']['group']
+  mode 0600
 end

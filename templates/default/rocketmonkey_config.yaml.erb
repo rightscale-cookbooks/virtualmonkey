@@ -2,7 +2,7 @@
 # Cookbook Name:: virtualmonkey
 # Template:: rocketmonkey_config.yaml
 #
-# Copyright (C) 2013 RightScale, Inc.
+# Copyright (C) 2013-2014 RightScale, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -57,19 +57,19 @@
 #
 # troop_path - Path to troop files
 #
-:troop_path: "/root/servertemplate_tests/updatedTroops/"
+:troop_path: "/root/<%= @collateral_repo_name %>/updatedTroops/"
 
 
 #
 # suite_path - Path to test suites
 #
-:suite_path: "/root/rightscale_cookbooks_private/tests/suites/"
+:suite_path: "/root/<%= @collateral_repo_name %>/tests/suites/"
 
 
 #
 # server_template_map_file - Path to server template map file
 #
-:server_template_map_file: "/root/rightscale_cookbooks_private/tests/config/servertemplate_mapping/release_v13.2.json"
+:server_template_map_file: "/root/<%= @collateral_repo_name %>/tests/config/servertemplate_mapping/<%= @servertemplate_mapping_file_name %>"
 
 
 #
@@ -79,14 +79,6 @@
 # On a cloud server it should usually be "/var/lib/jenkins/jobs"
 #
 :output_file_path: "/var/lib/jenkins/jobs"
-
-
-#
-# mci_override_file_name - Optional MCI Override file name
-#
-# You only need to specify this if you use the m:<friendly_name>/<revision> cell clause
-#
-#:mci_override_file_name: "mci.csv"
 
 
 #

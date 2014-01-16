@@ -56,6 +56,21 @@ execute "update rubygems" do
   command update_rubygems_cmd
 end
 
+# If were running on ruby 1.9 override the rest_connection and other basic gem versions
+if node['virtualmonkey']['ruby']['version'] == "ruby 1.9"
+  node['virtualmonkey']['rest']['gem_packages'] = {
+      "rake" => "10.1.0",
+      "bundler" => "1.3.5",
+      "ruby-debug19" => "0.11.6",
+      "gemedit" => "1.0.1",
+      "diff-lcs" => "1.2.5",
+      "rspec" => "2.14.1",
+      "json" => "1.7.7"
+  }
+  # Since ruby-debug was renamed to ruby-debug19 we have to delete the old entry
+  node['virtualmonkey']['rest']['gem_packages'].delete "ruby-debug"
+end
+
 # Installing gem dependencies
 log "  Installing gems requierd by rest_connection"
 node[:virtualmonkey][:rest][:gem_packages].each do |gem_name, gem_version|

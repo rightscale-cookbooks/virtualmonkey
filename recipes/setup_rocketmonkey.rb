@@ -48,8 +48,7 @@ directory "#{node[:virtualmonkey][:user_home]}/.rocketmonkey" do
 end
 
 # The rocketmonkey main configuration file is created from a template initially
-# allowing custom edits on the configuration. This template file is not
-# yet completely controlled by Chef.
+# allowing custom edits on the configuration.
 template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" do
   source "rocketmonkey_config.yaml.erb"
   owner node[:virtualmonkey][:user]
@@ -59,7 +58,23 @@ template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" d
     :jenkins_user => node[:'rs-jenkins'][:server][:user_name],
     :jenkins_password => node[:'rs-jenkins'][:server][:password],
     :right_acct_id => node[:virtualmonkey][:rest][:right_acct_id],
-    :right_subdomain => node[:virtualmonkey][:rest][:right_subdomain]
+    :right_subdomain => node[:virtualmonkey][:rest][:right_subdomain],
+    :collateral_repo_name => node['virtualmonkey']['virtualmonkey']['collateral_name'],
+    :servertemplate_mapping_file_name => node['virtualmonkey']['rocketmonkey']['servertemplate_mapping_file_name']
+  )
+  action :create_if_missing
+end
+
+# The googleget configuration file is created from a template initially
+# allowing custom edits on the configuration.
+template "#{node['virtualmonkey']['user_home']}/.rocketmonkey/googleget.yaml" do
+  source "rocketmonkey_googleget_config.yaml.erb"
+  owner node['virtualmonkey']['user']
+  group node['virtualmonkey']['group']
+  mode 0644
+  variables(
+      :google_drive_user => node['virtualmonkey']['rocketmonkey']['google_drive_user'],
+      :google_drive_password => node['virtualmonkey']['rocketmonkey']['google_drive_password']
   )
   action :create_if_missing
 end
@@ -68,7 +83,6 @@ end
 # Currently, these configuration files are not managed by Chef.
 log "  Creating rocketmonkey configuration files from templates"
 [
-  "googleget.yaml",
   "rocketmonkey.clouds.yaml",
   "rocketmonkey.regexs.yaml"
 ].each do |config_file|
@@ -87,7 +101,7 @@ execute "Install rocketmonkey gem dependencies" do
   command "bundle install --system"
 end
 
-log " Deploying icons for RocketMonkey" 
+log " Deploying icons for RocketMonkey"
 execute "Deploying icons for RocketMonkey" do
   cwd node[:virtualmonkey][:rocketmonkey_path]
   command "bin/upload_images --target jenkins"

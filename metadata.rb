@@ -13,6 +13,7 @@ supports "ubuntu"
 depends "rightscale"
 depends "rs-jenkins"
 depends "marker"
+depends "ruby"
 
 recipe "virtualmonkey::setup_git",
   "Setup Git configuration for virtualmonkey."
@@ -28,6 +29,8 @@ recipe "virtualmonkey::setup_test_config",
   "Setup test specific configuration."
 recipe "virtualmonkey::update_stids",
   "Update ServerTemplate IDs"
+recipe "virtualmonkey::ruby",
+  "Select which version of ruby to install"
 
 {
   :aws_access_key_id => [
@@ -337,6 +340,27 @@ attribute "virtualmonkey/rocketmonkey/repo_branch",
   :required => "required",
   :recipes => ["virtualmonkey::setup_rocketmonkey"]
 
+attribute "virtualmonkey/rocketmonkey/servertemplate_mapping_file_name",
+  :display_name => "Rocket Monkey Server Template Mapping File Name",
+  :description =>
+      "The server template mapping file name you want the Rocket Monkey to use when generating Virtual Monkey Jenkins jobs. This is required for all next generation collateral.",
+  :required => "recommended",
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
+
+attribute "virtualmonkey/rocketmonkey/google_drive_user",
+  :display_name => "Google Drive User",
+  :description =>
+      "User name used by the googleget and googleput scripts for downloading and uploading test matrices from Google Drive.",
+  :required => "required",
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
+
+attribute "virtualmonkey/rocketmonkey/google_drive_password",
+  :display_name => "Google Drive Password",
+  :description =>
+      "Password used by the googleget and googleput scripts for downloading and uploading test matrices from Google Drive.",
+  :required => "required",
+  :recipes => ["virtualmonkey::setup_rocketmonkey"]
+
 attribute "virtualmonkey/test/smtp_username",
   :display_name => "SMTP Username",
   :description =>
@@ -350,3 +374,62 @@ attribute "virtualmonkey/test/smtp_password",
     "The SMTP password for lamp's check smtp test",
   :required => "required",
   :recipes => ["virtualmonkey::setup_test_config"]
+
+{
+  :east => [
+    "0 - AWS-East",
+    "AWS ssh launch key for AWS-East",
+    "29578"
+  ],
+  :eu => [
+    "1 - AWS EU",
+    "AWS ssh launch key for AWS EU",
+    "324202"
+  ],
+  :us_west => [
+    "2 - AWS US-West",
+    "AWS ssh launch key for AWS US-West",
+    "173773"
+  ],
+  :ap_singapore => [
+    "3 - AWS AP-Singapore",
+    "AWS ssh launch key for AWS AP-Singapore",
+    "324203"
+  ],
+  :ap_tokyo => [
+    "4 - AWS AP-Tokyo",
+    "AWS ssh launch key for AWS AP-Tokyo",
+    "324190"
+  ],
+  :us_oregon => [
+    "5 - AWS US-Oregon",
+    "AWS ssh launch key for AWS US-Oregon",
+    "255379001"
+  ],
+  :sa_sao_paolo => [
+    "6 - AWS SA-Sao Paulo",
+    "AWS ssh launch key for AWS SA-Sao Paulo",
+    "216453001"
+  ],
+  :ap_sydney => [
+    "7 - AWS AP-Sydney",
+    "AWS ssh launch key for AWS AP-Sydney",
+    "323389001"
+  ],
+}.each do |attribute_name, value|
+  display_name, description, default = value
+
+  attribute "virtualmonkey/aws_default_ssh_key_ids/#{attribute_name}",
+    :display_name => display_name,
+    :description => description,
+    :default => default,
+    :required => "optional",
+    :recipes => ["virtualmonkey::setup_virtualmonkey"]
+end
+
+attribute "virtualmonkey/ruby/version",
+  :display_name => "Ruby Version",
+  :description  => "Version of ruby to install - Currently the only valid values for this input are 'ruby 1.9' and 'ruby 1.8'",
+  :required     => "optional",
+  :recipes      => ["virtualmonkey::ruby"],
+  :default      => "ruby 1.9"

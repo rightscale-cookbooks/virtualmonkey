@@ -153,13 +153,13 @@ default[:virtualmonkey][:rocketmonkey][:repo_branch] = ""
 default[:virtualmonkey][:rest][:gem_packages] = {
   "rake" => "10.0.3",
   "bundler" => "1.2.3",
-  "jeweler" => "1.8.4",
   "ruby-debug" => "0.10.4",
   "gemedit" => "1.0.1",
   "diff-lcs" => "1.1.3",
   "rspec" => "2.12.0",
   "json" => "1.7.7"
 }
+
 # Monkey user
 default[:virtualmonkey][:user] = "root"
 # Monkey user's home directory
@@ -196,3 +196,16 @@ default[:virtualmonkey][:rest][:api_logging] = ""
 # Azure Endpoint is calculated from the Access Key ID
 default[:virtualmonkey][:fog][:azure_endpoint] = "https://" +
   "#{node[:virtualmonkey][:fog][:azure_access_key_id]}.blob.core.windows.net"
+
+# AWS Default SSH Keys
+default['virtualmonkey']['aws_default_ssh_key_ids']['east'] = '20578'
+default['virtualmonkey']['aws_default_ssh_key_ids']['eu'] = '324202'
+default['virtualmonkey']['aws_default_ssh_key_ids']['us_west'] = '173773'
+default['virtualmonkey']['aws_default_ssh_key_ids']['ap_singapore'] = '324203'
+default['virtualmonkey']['aws_default_ssh_key_ids']['ap_tokyo'] = '324190'
+default['virtualmonkey']['aws_default_ssh_key_ids']['us_oregon'] = '255379001'
+default['virtualmonkey']['aws_default_ssh_key_ids']['sa_sao_paolo'] = '216453001'
+default['virtualmonkey']['aws_default_ssh_key_ids']['ap_sydney'] = '323389001'
+
+# ruby version
+default['virtualmonkey']['ruby']['version'] = 'ruby 1.9'
