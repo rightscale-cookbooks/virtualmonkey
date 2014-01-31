@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
 description      'Installs/Configures VirtualMonkey'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '13.7.0'
+version          '13.8.0'
 
 supports "centos"
 supports "redhat"
@@ -280,6 +280,14 @@ attribute "virtualmonkey/rest/api_logging",
     "Whether to enable/disable API logging",
   :required => "optional",
   :choice => ["true", "false"],
+  :default => "false",
+  :recipes => ["virtualmonkey::setup_rest_connection"]
+
+attribute "virtualmonkey/rest/legacy_shard",
+  :display_name => "Legacy Shard",
+  :description => "Set this option to 'true' if you want to test on a legacy shard",
+  :choice => ["true", "false"],
+  :required => "optional",
   :default => "false",
   :recipes => ["virtualmonkey::setup_rest_connection"]
 

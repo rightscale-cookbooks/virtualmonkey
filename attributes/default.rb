@@ -190,6 +190,8 @@ default[:virtualmonkey][:rest][:azure_hack_retry_count] = ""
 default[:virtualmonkey][:rest][:azure_hack_sleep_seconds] = ""
 # API Logging on/off
 default[:virtualmonkey][:rest][:api_logging] = ""
+# legacy shard setting
+default['virtualmonkey']['rest']['legacy_shard'] = 'false'
 
 # Calculated Attributes
 
