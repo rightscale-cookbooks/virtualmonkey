@@ -286,7 +286,7 @@ attribute "virtualmonkey/rest/api_logging",
 attribute "virtualmonkey/rest/legacy_shard",
   :display_name => "Legacy Shard",
   :description => "Set this option to 'true' if you want to test on a legacy shard",
-  :choice => [ "true", "false" ],
+  :choice => ["true", "false"],
   :required => "optional",
   :default => "false",
   :recipes => ["virtualmonkey::setup_rest_connection"]
@@ -441,5 +441,3 @@ attribute "virtualmonkey/ruby/version",
   :required     => "optional",
   :recipes      => ["virtualmonkey::ruby"],
   :default      => "ruby 1.9"
-
-
