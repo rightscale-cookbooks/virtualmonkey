@@ -110,6 +110,7 @@ template "#{node[:virtualmonkey][:user_home]}/.rest_connection/rest_api_config.y
     :azure_hack_sleep_seconds =>
       node[:virtualmonkey][:rest][:azure_hack_sleep_seconds],
     :api_logging => node[:virtualmonkey][:rest][:api_logging],
+    :legacy_shard => node[:virtualmonkey][:rest][:legacy_shard],
     :ssh_keys => ["#{node[:virtualmonkey][:user_home]}/.ssh/api_user_key"]
   )
 end
