@@ -21,10 +21,10 @@ marker "recipe_start_rightscale" do
   template "rightscale_audit_entry.erb"
 end
 
-gem_package "bundler" do
-  gem_binary "/usr/bin/gem"
-  action :purge
-end
+# gem_package "bundler" do
+#   gem_binary "/usr/bin/gem"
+#   action :purge
+# end
 
 if node['virtualmonkey']['ruby']['version'] == "ruby 1.9"
   include_recipe "ruby::install_1_9"

@@ -36,28 +36,31 @@ packages.each do |pkg|
   package pkg
 end unless packages.empty?
 
-# Install rubygems compatible with Ruby 1.8.7. By default rubygems 2.x.x gets
-# installed.
-gem_package "rubygems-update" do
-  gem_binary "/usr/bin/gem"
-  version node[:virtualmonkey][:rubygems_update_version]
-  action :install
-end
 
-# Set the update rubygems command based on the platform
-update_rubygems_cmd = value_for_platform(
-  "ubuntu" => {
-    "default" => "/usr/local/bin/update_rubygems"
-  },
-  "default" => "/usr/bin/update_rubygems"
-)
+if node['virtualmonkey']['ruby']['version'] == "1.8"
+  # Install rubygems compatible with Ruby 1.8.7. By default rubygems 2.x.x gets
+  # installed.
+  gem_package "rubygems-update" do
+    gem_binary "/usr/bin/gem"
+    version node[:virtualmonkey][:rubygems_update_version]
+    action :install
+  end
 
-execute "update rubygems" do
-  command update_rubygems_cmd
+  # Set the update rubygems command based on the platform
+  update_rubygems_cmd = value_for_platform(
+    "ubuntu" => {
+      "default" => "/usr/local/bin/update_rubygems"
+    },
+    "default" => "/usr/bin/update_rubygems"
+  )
+
+  execute "update rubygems" do
+    command update_rubygems_cmd
+  end
 end
 
 # If were running on ruby 1.9 override the rest_connection and other basic gem versions
-if node['virtualmonkey']['ruby']['version'] == "ruby 1.9"
+if node['virtualmonkey']['ruby']['version'] == "1.9"
   node['virtualmonkey']['rest']['gem_packages'] = {
       "rake" => "10.1.0",
       "bundler" => "1.3.5",
