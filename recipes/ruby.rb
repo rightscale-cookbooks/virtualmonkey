@@ -22,8 +22,7 @@ marker "recipe_start_rightscale" do
 end
 
 gem_package "bundler" do
-  action :remove
-  options("-x")
+  action :purge
 end
 
 if node['virtualmonkey']['ruby']['version'] == "ruby 1.9"
