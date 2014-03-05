@@ -26,7 +26,7 @@ end
 #   action :purge
 # end
 
-if node['virtualmonkey']['ruby']['version'] == "ruby 1.9"
+if node['virtualmonkey']['ruby']['version'] == "1.9"
   include_recipe "ruby::install_1_9"
 else
   include_recipe "ruby::install_1_8"
