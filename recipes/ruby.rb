@@ -23,6 +23,7 @@ end
 
 gem_package "bundler" do
   action :remove
+  options("-x")
 end
 
 if node['virtualmonkey']['ruby']['version'] == "ruby 1.9"
