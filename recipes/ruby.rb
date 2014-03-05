@@ -22,6 +22,7 @@ marker "recipe_start_rightscale" do
 end
 
 gem_package "bundler" do
+  gem_binary "/usr/local/bin/gem_binary"
   action :purge
 end
 
