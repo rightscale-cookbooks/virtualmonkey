@@ -55,6 +55,7 @@ end
 # Install the dependencies of right_api_objects
 execute "bundle install" do
   cwd "#{node[:virtualmonkey][:user_home]}/right_api_objects"
+  environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle install"
 end
 
@@ -118,6 +119,7 @@ log "  Installing gems required for the collateral project"
 execute "bundle install on collateral" do
   cwd "#{node[:virtualmonkey][:user_home]}/" +
     "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
+  environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle install --no-color --system"
 end
 
