@@ -98,6 +98,7 @@ end
 log "  Installing required gems for rocketmonkey"
 execute "Install rocketmonkey gem dependencies" do
   cwd node[:virtualmonkey][:rocketmonkey_path]
+  # We need this path set in order to support Ubuntu
   environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle install --system"
 end
