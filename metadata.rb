@@ -438,7 +438,7 @@ end
 attribute "virtualmonkey/ruby/version",
   :display_name => "Ruby Version",
   :description  => "Version of ruby to install - Currently the only valid values for this input are '1.9' and '1.8'",
-  :choice       => ['1.8','1.9']
+  :choice       => ['1.8','1.9'],
   :required     => "optional",
   :recipes      => ["virtualmonkey::ruby"],
   :default      => "1.9"
