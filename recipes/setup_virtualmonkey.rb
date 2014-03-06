@@ -153,6 +153,7 @@ log "  Populating virtualmonkey cloud variables"
 execute "populate cloud variables" do
   cwd "#{node[:virtualmonkey][:user_home]}/" +
     "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
+  environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle exec monkey populate_all_cloud_vars" +
     " --force" +
     " --overwrite" +
