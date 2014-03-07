@@ -55,7 +55,7 @@ end
 # Install the dependencies of right_api_objects
 execute "bundle install" do
   cwd "#{node[:virtualmonkey][:user_home]}/right_api_objects"
-  # We need this path set in order to support Ubuntu
+  # Bundler loads in /usr/local/bin in Ubuntu.  Chef looks at system path, so we need to add this explicitly. 
   environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle install"
 end
@@ -120,7 +120,7 @@ log "  Installing gems required for the collateral project"
 execute "bundle install on collateral" do
   cwd "#{node[:virtualmonkey][:user_home]}/" +
     "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
-  # We need this path set in order to support Ubuntu
+  # Bundler loads in /usr/local/bin in Ubuntu.  Chef looks at system path, so we need to add this explicitly. 
   environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle install --no-color --system"
 end
@@ -155,7 +155,7 @@ log "  Populating virtualmonkey cloud variables"
 execute "populate cloud variables" do
   cwd "#{node[:virtualmonkey][:user_home]}/" +
     "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
-  # We need this path set in order to support Ubuntu
+  # Bundler loads in /usr/local/bin in Ubuntu.  Chef looks at system path, so we need to add this explicitly. 
   environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle exec monkey populate_all_cloud_vars" +
     " --force" +

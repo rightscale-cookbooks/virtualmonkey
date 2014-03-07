@@ -98,7 +98,7 @@ end
 log "  Installing required gems for rocketmonkey"
 execute "Install rocketmonkey gem dependencies" do
   cwd node[:virtualmonkey][:rocketmonkey_path]
-  # We need this path set in order to support Ubuntu
+  # Bundler loads in /usr/local/bin in Ubuntu.  Chef looks at system path, so we need to add this explicitly. 
   environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle install --system"
 end
