@@ -23,6 +23,8 @@ end
 
 if node['virtualmonkey']['ruby']['version'] == "1.9"
   include_recipe "ruby::install_1_9"
-else
+elsif node['virtualmonkey']['ruby']['version'] == "1.8"
   include_recipe "ruby::install_1_8"
+else
+  raise "Ruby version selected is not supported.  Please select 1.8 or 1.9"
 end

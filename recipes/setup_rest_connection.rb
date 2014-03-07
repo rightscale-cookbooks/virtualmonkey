@@ -47,15 +47,13 @@ if node['virtualmonkey']['ruby']['version'] == "1.8"
   end
 
   # Set the update rubygems command based on the platform
-  update_rubygems_cmd = value_for_platform(
-    "ubuntu" => {
-      "default" => "/usr/local/bin/update_rubygems"
-    },
-    "default" => "/usr/bin/update_rubygems"
-  )
-
   execute "update rubygems" do
-    command update_rubygems_cmd
+    command value_for_platform(
+      "ubuntu" => {
+        "default" => "/usr/local/bin/update_rubygems"
+      },
+      "default" => "/usr/bin/update_rubygems"
+    )
   end
 end
 
