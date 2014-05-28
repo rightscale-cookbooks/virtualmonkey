@@ -133,7 +133,7 @@ default[:virtualmonkey][:virtualmonkey][:monkey_repo_branch] = ""
 # Collateral Repository URL
 default[:virtualmonkey][:virtualmonkey][:collateral_repo_url] = ""
 # Collateral Repository URL
-default[:virtualmonkey][:virtualmonkey][:collateral_repo_path] = ""
+default[:virtualmonkey][:virtualmonkey][:collateral_path] = ""
 # Collateral Repository Branch
 default[:virtualmonkey][:virtualmonkey][:collateral_repo_branch] = ""
 # Right API Objects Repository URL
