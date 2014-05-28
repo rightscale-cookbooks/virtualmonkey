@@ -99,27 +99,32 @@ basename_cmd.run_command
 basename_cmd.error!
 
 node[:virtualmonkey][:virtualmonkey][:collateral_name] = basename_cmd.stdout.chomp
+collateral_dir = ::File.join(
+  node[:virtualmonkey][:user_home],
+  node[:virtualmonkey][:virtualmonkey][:collateral_path],
+  node[:virtualmonkey][:virtualmonkey][:collateral_name])
+repo_checkout_dir = ::File.join(
+  node[:virtualmonkey][:user_home],
+  node[:virtualmonkey][:virtualmonkey][:collateral_name])
 
-log "  Checking out collateral repo to" +
-  " #{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
-git "#{node[:virtualmonkey][:user_home]}/" +
-  "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}" do
+
+
+log "  Checking out collateral repo to #{repo_checkout_dir}"
+git repo_checkout_dir do 
   repository node[:virtualmonkey][:virtualmonkey][:collateral_repo_url]
   reference node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]
   action :sync
 end
 
 execute "git checkout" do
-  cwd "#{node[:virtualmonkey][:user_home]}/" +
-    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
+  cwd repo_checkout_dir
   command "git checkout" +
     " #{node[:virtualmonkey][:virtualmonkey][:collateral_repo_branch]}"
 end
 
 log "  Installing gems required for the collateral project"
 execute "bundle install on collateral" do
-  cwd "#{node[:virtualmonkey][:user_home]}/" +
-    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
+  cwd collateral_dir
   # Bundler loads in /usr/local/bin in Ubuntu.  Chef looks at system path, so we need to add this explicitly. 
   environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle install --no-color --system"
@@ -153,8 +158,7 @@ end
 # Populate all virtualmonkey cloud variables
 log "  Populating virtualmonkey cloud variables"
 execute "populate cloud variables" do
-  cwd "#{node[:virtualmonkey][:user_home]}/" +
-    "#{node[:virtualmonkey][:virtualmonkey][:collateral_name]}"
+  cwd collateral_dir
   # Bundler loads in /usr/local/bin in Ubuntu.  Chef looks at system path, so we need to add this explicitly. 
   environment("PATH" => "#{ENV["PATH"]}:/usr/local/bin")
   command "bundle exec monkey populate_all_cloud_vars" +
