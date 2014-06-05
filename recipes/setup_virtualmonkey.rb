@@ -101,8 +101,8 @@ basename_cmd.error!
 node[:virtualmonkey][:virtualmonkey][:collateral_name] = basename_cmd.stdout.chomp
 collateral_dir = ::File.join(
   node[:virtualmonkey][:user_home],
-  node[:virtualmonkey][:virtualmonkey][:collateral_path],
-  node[:virtualmonkey][:virtualmonkey][:collateral_name])
+  node[:virtualmonkey][:virtualmonkey][:collateral_name],
+  node[:virtualmonkey][:virtualmonkey][:collateral_repo_path])
 repo_checkout_dir = ::File.join(
   node[:virtualmonkey][:user_home],
   node[:virtualmonkey][:virtualmonkey][:collateral_name])

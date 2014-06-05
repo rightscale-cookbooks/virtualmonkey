@@ -51,8 +51,8 @@ end
 # allowing custom edits on the configuration.
 collateral_dir = ::File.join(
   node[:virtualmonkey][:user_home],
-  node[:virtualmonkey][:virtualmonkey][:collateral_path],
-  node[:virtualmonkey][:virtualmonkey][:collateral_name])
+  node[:virtualmonkey][:virtualmonkey][:collateral_name],
+  node[:virtualmonkey][:virtualmonkey][:collateral_repo_path])
 
 template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" do
   source "rocketmonkey_config.yaml.erb"
