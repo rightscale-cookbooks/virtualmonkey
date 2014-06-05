@@ -49,6 +49,11 @@ end
 
 # The rocketmonkey main configuration file is created from a template initially
 # allowing custom edits on the configuration.
+collateral_dir = ::File.join(
+  node[:virtualmonkey][:user_home],
+  node[:virtualmonkey][:virtualmonkey][:collateral_path],
+  node[:virtualmonkey][:virtualmonkey][:collateral_name])
+
 template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" do
   source "rocketmonkey_config.yaml.erb"
   owner node[:virtualmonkey][:user]
@@ -59,7 +64,7 @@ template "#{node[:virtualmonkey][:user_home]}/.rocketmonkey/rocketmonkey.yaml" d
     :jenkins_password => node[:'rs-jenkins'][:server][:password],
     :right_acct_id => node[:virtualmonkey][:rest][:right_acct_id],
     :right_subdomain => node[:virtualmonkey][:rest][:right_subdomain],
-    :collateral_repo_name => node['virtualmonkey']['virtualmonkey']['collateral_name'],
+    :collateral_dir => collateral_dir,
     :servertemplate_mapping_file_name => node['virtualmonkey']['rocketmonkey']['servertemplate_mapping_file_name']
   )
   action :create_if_missing
