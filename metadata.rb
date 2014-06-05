@@ -312,7 +312,7 @@ attribute "virtualmonkey/virtualmonkey/collateral_repo_path",
     "Subdirectory containing virtualmonkey collateral for Git project. Defaults to root dir",
   :required => "recommended",
   :default => "",
-  :recipes => ["virtualmonkey::setup_virtualmonkey"]
+  :recipes => ["virtualmonkey::setup_virtualmonkey", "virtualmonkey::setup_rocketmonkey"]
 
 attribute "virtualmonkey/virtualmonkey/collateral_repo_branch",
   :display_name => "Collateral Repo Branch",
