@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
 description      'Installs/Configures VirtualMonkey'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '13.10.1'
+version          '13.11.0'
 
 supports "centos"
 supports "redhat"
@@ -305,6 +305,14 @@ attribute "virtualmonkey/virtualmonkey/collateral_repo_url",
     "Git URL for collateral project",
   :required => "required",
   :recipes => ["virtualmonkey::setup_virtualmonkey"]
+
+attribute "virtualmonkey/virtualmonkey/collateral_repo_path",
+  :display_name => "Collateral Repo Path",
+  :description =>
+    "Subdirectory containing virtualmonkey collateral for Git project. Defaults to root dir",
+  :required => "recommended",
+  :default => "",
+  :recipes => ["virtualmonkey::setup_virtualmonkey", "virtualmonkey::setup_rocketmonkey"]
 
 attribute "virtualmonkey/virtualmonkey/collateral_repo_branch",
   :display_name => "Collateral Repo Branch",
