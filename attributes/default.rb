@@ -89,6 +89,36 @@ default[:virtualmonkey][:fog][:hp_secret_access_key] = ""
 # HP Auth URL
 default[:virtualmonkey][:fog][:hp_auth_url] = ""
 
+# silver_cred settings
+
+default[:virtualmonkey][:silver_creds][:aws_access_key_id] = ""
+default[:virtualmonkey][:silver_creds][:aws_secret_access_key] = ""
+default[:virtualmonkey][:silver_creds][:silver_qa_admin_password] = ""
+default[:virtualmonkey][:silver_creds][:silver_qa_user_password] = ""
+default[:virtualmonkey][:silver_creds][:silver_qa_db_password] = ""
+default[:virtualmonkey][:silver_creds][:dnsmadeeasy_test_password] = ""
+default[:virtualmonkey][:silver_creds][:dnsmadeeasy_test_user] = ""
+default[:virtualmonkey][:silver_creds][:rackspace_auth_key] = ""
+default[:virtualmonkey][:silver_creds][:rackspace_username] = ""
+default[:virtualmonkey][:silver_creds][:rackspace_auth_key_uk] = ""
+default[:virtualmonkey][:silver_creds][:rackspace_username_uk] = ""
+default[:virtualmonkey][:silver_creds][:rackspace_rackconnect_auth_key] = ""
+default[:virtualmonkey][:silver_creds][:rackspace_rackconnect_username] = ""
+default[:virtualmonkey][:silver_creds][:silver_was_acct_name] = ""
+default[:virtualmonkey][:silver_creds][:silver_was_acct_key] = ""
+default[:virtualmonkey][:silver_creds][:softlayer_access_key_id] = ""
+default[:virtualmonkey][:silver_creds][:softlayer_secret_access_key] = ""
+default[:virtualmonkey][:silver_creds][:openstack_folsom_access_key_id] = ""
+default[:virtualmonkey][:silver_creds][:openstack_folsom_secret_access_key] = ""
+default[:virtualmonkey][:silver_creds][:openstack_auth_url] = ""
+default[:virtualmonkey][:silver_creds][:publish_test_user] = ""
+default[:virtualmonkey][:silver_creds][:publish_test_password] = ""
+
+# dns_provider settings
+
+default[:virtualmonkey][:dns_provider][:api_key] = ""
+default[:virtualmonkey][:dns_provider][:secret_key = ""
+
 # Git Settings
 
 # Git Username
