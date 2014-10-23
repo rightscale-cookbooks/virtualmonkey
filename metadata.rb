@@ -25,6 +25,10 @@ recipe "virtualmonkey::setup_rocketmonkey",
   "Setup rocketmonkey."
 recipe "virtualmonkey::update_fog_credentials",
   "Setup or update existing credentials for fog configuration."
+recipe "virtualmonkey::update_silver_creds",
+  "Setup or update existing credentials for testign in windows environment."
+recipe "virtualmonkey::update_dns_providers",
+  "Setup or update existing credentials for dns access in linux testing."
 recipe "virtualmonkey::setup_test_config",
   "Setup test specific configuration."
 recipe "virtualmonkey::update_stids",

@@ -28,6 +28,8 @@ following order.
 4. `virtualmonkey::setup_virtualmonkey`
 5. `virtualmonkey::setup_test_config`
 6. `virtualmonkey::update_fog_credentials`
+7. `virtualmonkey::update_silver_creds`
+8. `virtualmonkey::update_dns_provider`
 
 ## DETAILS:
 
