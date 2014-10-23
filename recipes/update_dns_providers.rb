@@ -23,7 +23,7 @@ end
 
 log "  Updating dns provider credentials"
 template "/root/dns_provider.yaml" do
-  source "dns_provider.erb"
+  source "dns_providers.erb"
   variables(
     :creds => node[:virtualmonkey][:dns_provider]
   )
