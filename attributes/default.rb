@@ -117,7 +117,7 @@ default[:virtualmonkey][:silver_creds][:publish_test_password] = ""
 # dns_provider settings
 
 default[:virtualmonkey][:dns_provider][:api_key] = ""
-default[:virtualmonkey][:dns_provider][:secret_key = ""
+default[:virtualmonkey][:dns_provider][:secret_key] = ""
 
 # Git Settings
 
