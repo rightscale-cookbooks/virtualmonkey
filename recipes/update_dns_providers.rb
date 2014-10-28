@@ -22,7 +22,7 @@ marker "recipe_start_rightscale" do
 end
 
 log "  Updating dns provider credentials"
-template "/root/dns_provider.yaml" do
+template "/root/.dns_provider.yaml" do
   source "dns_providers.erb"
   variables(
     :creds => node[:virtualmonkey][:dns_provider]
