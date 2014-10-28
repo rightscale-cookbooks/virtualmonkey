@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: virtualmonkey
-# Recipe:: update_for_credentials
+# Recipe:: update_silver_creds
 #
 # Copyright (C) 2013 RightScale, Inc.
 #

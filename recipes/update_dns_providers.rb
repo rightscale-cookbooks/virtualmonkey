@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: virtualmonkey
-# Recipe:: update_for_credentials
+# Recipe:: update_dns_provider
 #
 # Copyright (C) 2013 RightScale, Inc.
 #
