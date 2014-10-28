@@ -184,91 +184,91 @@ recipe "virtualmonkey::ruby",
 end
 
 {
-  :aws_access_key_id] => [
+  :aws_access_key_id => [
     "AWS_ACCESS_KEY",
     "Access key for AWS"
   ],
-  :aws_secret_access_key] => [
+  :aws_secret_access_key => [
     "AWS_SECRET_ACCESS_KEY",
     "Secret access key for AWS"
   ],
-  :silver_qa_admin_password] => [
+  :silver_qa_admin_password => [
     "SILVER_QA_ADMIN_PASSWORD",
     "The administrator pasword for silver QA"
   ],
-  :silver_qa_user_password] => [
+  :silver_qa_user_password => [
     "SILVER_QA_USER_PASSWORD",
     "The password for the silver QA user"
   ],
-  :silver_qa_db_password] => [
+  :silver_qa_db_password => [
     "SILVER_QA_DB_PASSWORD",
     "The password for the silver QA database"
   ],
-  :dnsmadeeasy_test_password] => [
+  :dnsmadeeasy_test_password => [
     "DNSMADEEASY_TEST_PASSWORD",
     "The password for dnsmadeeasy dns provider"
   ],
-  :dnsmadeeasy_test_user] => [
+  :dnsmadeeasy_test_user => [
     "DNSMADEEASY_TEST_USER",
     "The dnsmadeeasy test user"
   ],
-  :rackspace_auth_key] => [
+  :rackspace_auth_key => [
     "RACKSPACE_AUTH_KEY",
     "The key for Rackspace"
   ],
-  :rackspace_username] => [
+  :rackspace_username => [
     "RACKSPACE_USERNAME",
     "THe Rackspace user"
   ],
-  :rackspace_auth_key_uk] => [
+  :rackspace_auth_key_uk => [
     "RACKSPACE_AUTH_KEY_UK",
     "The key for Rackspace UK"
   ],
-  :rackspace_username_uk] => [
+  :rackspace_username_uk => [
     "RACKSPACE_USERNAME_UK",
     "The user name for Rackspace UK"
   ],
-  :rackspace_rackconnect_auth_key] => [
+  :rackspace_rackconnect_auth_key => [
     "RACKSPACE_RACKCONNECT_AUTH_KEY",
     "The key for Rackspace Rackconnect"
   ],
-  :rackspace_rackconnect_username] => [
+  :rackspace_rackconnect_username => [
     "RACKSPACE_RACKCONNECT_USERNAME",
     "The username for Rackspace Rackconnect"
   ],
-  :silver_was_acct_name] => [
+  :silver_was_acct_name => [
     "SILVER_WAS_ACCT_NAME",
     "The account name for silver was"
   ],
-  :silver_was_acct_key] => [
+  :silver_was_acct_key => [
     "SILVER_WAS_ACCT_KEY",
     "The key for silver was account"
   ],
-  :softlayer_access_key_id] => [
+  :softlayer_access_key_id => [
     "SOFTLAYER_ACCESS_KEY_ID",
     "The key for Softlayer"
   ],
-  :softlayer_secret_access_key] => [
+  :softlayer_secret_access_key => [
     "SOFTLAYER_SECRET_ACCESS_KEY",
     "The secret key for Softlayer"
   ],
-  :openstack_folsom_access_key_id] => [
+  :openstack_folsom_access_key_id => [
     "OPENSTACK_FOLSOM_ACCESS_KEY_ID",
     "The key for OpenStack Folsom"
   ],
-  :openstack_folsom_secret_access_key] => [
+  :openstack_folsom_secret_access_key => [
     "OPENSTACK_FOLSOM_SECRET_ACCESS_KEY",
     "The key for OpenStack Folsom"
   ],
-  :openstack_auth_url] => [
+  :openstack_auth_url => [
     "OPENSTACK_AUTH_URL",
     "The auth url for Openstack"
   ],
-  :publish_test_user] => [
+  :publish_test_user => [
     "PUBLISH_TEST_USER",
     "The API user for PUBLISH account"
   ],
-  :publish_test_password] => [
+  :publish_test_password => [
     "PUBLISH_TEST_PASSWORD",
     "The password for API use on PUBLISH account"
   ],
@@ -278,7 +278,7 @@ end
   attribute "virtualmonkey/silver_creds/#{attribute_name}",
     :display_name => display_name,
     :description => description,
-    :required => "required"
+    :required => "required",
     :recipes => ["virtualmonkey::setup_silver_creds"]
 end
 
@@ -297,7 +297,7 @@ end
   attribute "virtualmonkey/dns_provider/#{attribute_name}",
     :display_name => display_name,
     :description => description,
-    :required => "required"
+    :required => "required",
     :recipes => ["virtualmonkey::setup_dns_providers"]
 end
 
