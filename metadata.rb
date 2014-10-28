@@ -279,7 +279,7 @@ end
     :display_name => display_name,
     :description => description,
     :required => "required",
-    :recipes => ["virtualmonkey::setup_silver_creds"]
+    :recipes => ["virtualmonkey::update_silver_creds"]
 end
 
 {
@@ -298,7 +298,7 @@ end
     :display_name => display_name,
     :description => description,
     :required => "required",
-    :recipes => ["virtualmonkey::setup_dns_providers"]
+    :recipes => ["virtualmonkey::update_dns_providers"]
 end
 
 attribute "virtualmonkey/git/user",
