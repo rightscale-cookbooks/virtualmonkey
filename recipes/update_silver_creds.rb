@@ -22,7 +22,7 @@ marker "recipe_start_rightscale" do
 end
 
 log "  Updating silver credentials"
-template "/root/silver_creds.yml" do
+template "/root/silver_creds.yaml" do
   source "silver_creds.erb"
   variables(
     :creds => node[:virtualmonkey][:silver_creds]
