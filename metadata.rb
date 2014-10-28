@@ -278,7 +278,7 @@ end
   attribute "virtualmonkey/silver_creds/#{attribute_name}",
     :display_name => display_name,
     :description => description,
-    :required => "required",
+    :required => "optional",
     :recipes => ["virtualmonkey::update_silver_creds"]
 end
 
@@ -297,7 +297,7 @@ end
   attribute "virtualmonkey/dns_provider/#{attribute_name}",
     :display_name => display_name,
     :description => description,
-    :required => "required",
+    :required => "optional",
     :recipes => ["virtualmonkey::update_dns_providers"]
 end
 
