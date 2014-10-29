@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
 description      'Installs/Configures VirtualMonkey'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '13.10.1'
+version          '13.10.2'
 
 supports "centos"
 supports "redhat"
@@ -25,6 +25,10 @@ recipe "virtualmonkey::setup_rocketmonkey",
   "Setup rocketmonkey."
 recipe "virtualmonkey::update_fog_credentials",
   "Setup or update existing credentials for fog configuration."
+recipe "virtualmonkey::update_silver_creds",
+  "Setup or update existing credentials for testing in windows environment."
+recipe "virtualmonkey::update_dns_providers",
+  "Setup or update existing credentials for dns access in linux testing."
 recipe "virtualmonkey::setup_test_config",
   "Setup test specific configuration."
 recipe "virtualmonkey::update_stids",
@@ -177,6 +181,124 @@ recipe "virtualmonkey::ruby",
     :description => description,
     :required => "required",
     :recipes => ["virtualmonkey::update_fog_credentials"]
+end
+
+{
+  :aws_access_key_id => [
+    "AWS_ACCESS_KEY",
+    "Access key for AWS"
+  ],
+  :aws_secret_access_key => [
+    "AWS_SECRET_ACCESS_KEY",
+    "Secret access key for AWS"
+  ],
+  :silver_qa_admin_password => [
+    "SILVER_QA_ADMIN_PASSWORD",
+    "The administrator pasword for silver QA"
+  ],
+  :silver_qa_user_password => [
+    "SILVER_QA_USER_PASSWORD",
+    "The password for the silver QA user"
+  ],
+  :silver_qa_db_password => [
+    "SILVER_QA_DB_PASSWORD",
+    "The password for the silver QA database"
+  ],
+  :dnsmadeeasy_test_password => [
+    "DNSMADEEASY_TEST_PASSWORD",
+    "The password for dnsmadeeasy dns provider"
+  ],
+  :dnsmadeeasy_test_user => [
+    "DNSMADEEASY_TEST_USER",
+    "The dnsmadeeasy test user"
+  ],
+  :rackspace_auth_key => [
+    "RACKSPACE_AUTH_KEY",
+    "The key for Rackspace"
+  ],
+  :rackspace_username => [
+    "RACKSPACE_USERNAME",
+    "THe Rackspace user"
+  ],
+  :rackspace_auth_key_uk => [
+    "RACKSPACE_AUTH_KEY_UK",
+    "The key for Rackspace UK"
+  ],
+  :rackspace_username_uk => [
+    "RACKSPACE_USERNAME_UK",
+    "The user name for Rackspace UK"
+  ],
+  :rackspace_rackconnect_auth_key => [
+    "RACKSPACE_RACKCONNECT_AUTH_KEY",
+    "The key for Rackspace Rackconnect"
+  ],
+  :rackspace_rackconnect_username => [
+    "RACKSPACE_RACKCONNECT_USERNAME",
+    "The username for Rackspace Rackconnect"
+  ],
+  :silver_was_acct_name => [
+    "SILVER_WAS_ACCT_NAME",
+    "The account name for silver was"
+  ],
+  :silver_was_acct_key => [
+    "SILVER_WAS_ACCT_KEY",
+    "The key for silver was account"
+  ],
+  :softlayer_access_key_id => [
+    "SOFTLAYER_ACCESS_KEY_ID",
+    "The key for Softlayer"
+  ],
+  :softlayer_secret_access_key => [
+    "SOFTLAYER_SECRET_ACCESS_KEY",
+    "The secret key for Softlayer"
+  ],
+  :openstack_folsom_access_key_id => [
+    "OPENSTACK_FOLSOM_ACCESS_KEY_ID",
+    "The key for OpenStack Folsom"
+  ],
+  :openstack_folsom_secret_access_key => [
+    "OPENSTACK_FOLSOM_SECRET_ACCESS_KEY",
+    "The key for OpenStack Folsom"
+  ],
+  :openstack_auth_url => [
+    "OPENSTACK_AUTH_URL",
+    "The auth url for Openstack"
+  ],
+  :publish_test_user => [
+    "PUBLISH_TEST_USER",
+    "The API user for PUBLISH account"
+  ],
+  :publish_test_password => [
+    "PUBLISH_TEST_PASSWORD",
+    "The password for API use on PUBLISH account"
+  ],
+}.each do |attribute_name, value|
+  display_name, description = value
+
+  attribute "virtualmonkey/silver_creds/#{attribute_name}",
+    :display_name => display_name,
+    :description => description,
+    :required => "optional",
+    :recipes => ["virtualmonkey::update_silver_creds"]
+end
+
+{
+  :api_key => [
+    "DNS_PROVIDER_API_KEY",
+    "The key to access dns provider"
+  ],
+  :secret_key => [
+    "DNS_PROVIDER_SECRET_KEY",
+    "The secret key to access dns provider"
+  ],
+}.each do |attribute_name, value|
+  display_name, description = value
+
+  attribute "virtualmonkey/dns_provider/#{attribute_name}",
+    :display_name => display_name,
+    :description => description,
+    :required => "optional",
+    :recipes => ["virtualmonkey::update_dns_providers"]
 end
 
 attribute "virtualmonkey/git/user",
