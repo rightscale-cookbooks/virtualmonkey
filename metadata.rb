@@ -508,35 +508,35 @@ attribute "virtualmonkey/test/smtp_password",
 {
   :east => [
     "0 - AWS-East",
-    "AWS ssh launch key for AWS-East",
+    "AWS ssh launch key for AWS-East"
   ],
   :eu => [
     "1 - AWS EU",
-    "AWS ssh launch key for AWS EU",
+    "AWS ssh launch key for AWS EU"
   ],
   :us_west => [
     "2 - AWS US-West",
-    "AWS ssh launch key for AWS US-West",
+    "AWS ssh launch key for AWS US-West"
   ],
   :ap_singapore => [
     "3 - AWS AP-Singapore",
-    "AWS ssh launch key for AWS AP-Singapore",
+    "AWS ssh launch key for AWS AP-Singapore"
   ],
   :ap_tokyo => [
     "4 - AWS AP-Tokyo",
-    "AWS ssh launch key for AWS AP-Tokyo",
+    "AWS ssh launch key for AWS AP-Tokyo"
   ],
   :us_oregon => [
     "5 - AWS US-Oregon",
-    "AWS ssh launch key for AWS US-Oregon",
+    "AWS ssh launch key for AWS US-Oregon"
   ],
   :sa_sao_paolo => [
     "6 - AWS SA-Sao Paulo",
-    "AWS ssh launch key for AWS SA-Sao Paulo",
+    "AWS ssh launch key for AWS SA-Sao Paulo"
   ],
   :ap_sydney => [
     "7 - AWS AP-Sydney",
-    "AWS ssh launch key for AWS AP-Sydney",
+    "AWS ssh launch key for AWS AP-Sydney"
   ],
 }.each do |attribute_name, value|
   display_name, description = value
